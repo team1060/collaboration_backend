@@ -50,7 +50,7 @@ public class BrandMapperTest {
 	@Test
 	public void insertBrandTest() {
 
-	        RegisterBrandRequest request = RegisterBrandRequest.builder().brandName("테스트 브랜드명").build();
+	        RegisterBrandRequest request = RegisterBrandRequest.builder().brand_name("테스트 브랜드명").build();
 	        System.out.println("Received request: " + request);
 	        brandMapper.insertBrand(request);
 
