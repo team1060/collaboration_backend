@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.team1060.golf.golf.mapper.GolfMapper">
+
+	<!-- 골프장 전체 조회 -->
+	<select id="getList" resultType="com.team1060.golf.golf.api.response.ViewGolf">
+		SELECT * FROM tbl_golf
+	</select>
+
+	<!-- 골프장 등록 -->
+	<insert id="insert">
+		INSERT INTO tbl_golf(region, name, description, holes, pars, land_area,
+		address, contact, fax)
+		VALUES (#{region}, #{name}, #{description}, #{holes}, #{pars}, #{land_area},
+		#{address}, #{contact}, #{fax})
+	</insert>
+
+	<!-- 골프장 1개 조회 -->
+	<select id="select" parameterType="Long" resultType="com.team1060.golf.golf.api.response.ViewGolf">
+		SELECT * FROM tbl_golf WHERE golf_no = #{golf_no}
+	</select>
+
+	<!-- 골프장 수정 -->
+	<update id="update">
+		UPDATE tbl_golf
+		SET region=#{region}, name=#{name}, description=#{description},
+		holes=#{holes}, pars=#{pars},
+		land_area=#{land_area}, address=#{address}, contact=#{contact}, fax=#{fax}
+		WHERE golf_no=#{golf_no}
+	</update>
+
+	<!-- 골프장 삭제 -->
+	<delete id="delete" parameterType="Long">
+		DELETE FROM tbl_golf WHERE golf_no = #{golf_no}
+	</delete>
+
+	<!-- 골프장 지역별 조회 -->
+	<select id="getRegionList" parameterType="com.team1060.golf.golf.api.response.ViewGolf">
+	select * from tbl_golf where region = #{region}
+	</select>
+	
+</mapper>

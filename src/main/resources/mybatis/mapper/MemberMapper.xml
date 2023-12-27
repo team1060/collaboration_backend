@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.team1060.golf.auth.mapper.MemberMapper">
+
+	<!-- 회원가입 -->
+	<insert id="insert">
+		INSERT INTO tbl_member (
+		email, nickname, username,
+		password, regdate,
+		password_changed_at, birthdate, phone_number, type,
+		auth_data,
+		is_sms_consent, is_email_consent, gender, telecom, is_korean
+		) VALUES (
+		#{email}, #{nickname}, #{username}, #{password}, #{regdate},
+		#{password_changed_at}, #{birthdate}, #{phone_number}, #{type},
+		#{auth_data},
+		#{is_sms_consent}, #{is_email_consent}, #{gender},
+		#{telecom}, #{is_korean}
+		)
+	</insert>
+
+	<!-- 로그인 -->
+	<select id="login"
+		resultType="com.team1060.golf.auth.api.response.ViewMember">
+		SELECT email, password
+		FROM tbl_member
+		WHERE email=#{email} AND password=#{password}
+	</select>
+
+	<!-- 이메일 중복체크 -->
+	<select id="checkedEmail" resultType="boolean">
+		SELECT COUNT(*) > 0 AS is_checkedEmail
+		FROM tbl_member
+		WHERE email = #{email};
+	</select>
+
+	<!-- 전체조회 -->
+	<select id="getList"
+		resultType="com.team1060.golf.auth.api.response.ViewMember">
+		SELECT * FROM tbl_member
+	</select>
+	<!-- 이메일로 1명 조회 -->
+	<select id="select"
+		resultType="com.team1060.golf.auth.api.response.ViewMember">
+		SELECT * FROM tbl_member WHERE email = #{email}
+	</select>
+
+	<!-- 정보수정 -->
+	<update id="update">
+		UPDATE tbl_member SET
+		nickname = #{nickname},
+		username
+		= #{username},
+		password = #{password},
+		birthdate = #{birthdate},
+		phone_number = #{phone_number},
+		type = #{type},
+		auth_data =
+		#{auth_data},
+		is_sms_consent = #{is_sms_consent},
+		is_email_consent =
+		#{is_email_consent},
+		gender = #{gender},
+		telecom = #{telecom},
+		is_korean
+		= #{is_korean}
+		WHERE email = #{email}
+	</update>
+
+	<!-- 회원 삭제 -->
+	<delete id="delete" parameterType="String">
+		DELETE FROM tbl_member WHERE
+		email = #{email}
+	</delete>
+</mapper>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.team1060.golf.product.mapper.ProductMapper">
+
+    <!-- 모든 상품 조회 -->
+    <select id="selectAll" 
+    	parameterType="com.team1060.golf.product.api.request.SearchProductRequest" 
+    	resultType="com.team1060.golf.product.api.response.ViewAllProduct">
+        SELECT
+            product_no,
+            brand_no,
+            product,
+            price,
+            discount,
+            is_shop_pickup,
+            is_shop_delivery
+        FROM
+            tbl_product
+
+        <where>
+			<!-- 브랜드 필터 조건 -->
+            <if test="brand != null and brand != ''">
+                AND brand = #{brand}
+            </if>
+            <!-- 등록 날짜 필터 조건 -->
+            <if test="regDate != null">
+                AND reg_date = #{regDate}
+            </if>
+            <!-- 다른 조건들도 필요한 경우 추가 -->
+        </where>
+
+        <if test="sortBy != null and sortBy != ''">
+            ORDER BY ${sortBy} ${sortOrder}
+        </if>
+        <!-- 페이지네이션을 위한 LIMIT 절 -->
+        LIMIT #{page}, #{size}
+    </select>
+
+</mapper>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- BrandMapper.xml -->
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.team1060.golf.product.mapper.BrandMapper">
+
+    <!-- 브랜드 등록 -->
+	<insert id="insertBrand">
+	    INSERT INTO tbl_p_brand (brand_name)
+	    VALUES (#{brand_name}); 
+	</insert>
+
+    
+    <!-- 모든 브랜드 조회 -->
+    <select id="selectAllBrands" resultType="com.team1060.golf.product.api.response.ViewBrand">
+        SELECT brand_no, brand_name
+        FROM tbl_p_brand;
+    </select>
+
+    <!-- 특정 브랜드 조회 -->
+    <select id="selectBrand" parameterType="Long" resultType="com.team1060.golf.product.api.response.ViewBrand">
+        SELECT brand_no, brand_name
+        FROM tbl_p_brand
+        WHERE brand_no = #{brand_no};
+    </select>
+
+    <!-- 브랜드 정보 업데이트 -->
+	<update id="updateBrand" parameterType="com.team1060.golf.product.api.request.ModifyBrandRequest">
+	    UPDATE tbl_p_brand
+	    SET brand_name = #{brand_name}
+	    WHERE brand_no = #{brand_no};
+	</update>
+
+    <!-- 브랜드 삭제 -->
+	<delete id="deleteBrand" parameterType="Long">
+	    DELETE FROM tbl_p_brand
+	    WHERE brand_no = #{brand_no};
+	</delete>
+	
+
+
+</mapper>
