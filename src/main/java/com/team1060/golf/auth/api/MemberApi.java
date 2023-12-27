@@ -1,5 +1,6 @@
 package com.team1060.golf.auth.api;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -14,20 +15,26 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.team1060.golf.auth.api.request.EmailRequest;
 import com.team1060.golf.auth.api.request.RegisterAndModifyMember;
 import com.team1060.golf.auth.api.response.ViewMember;
 import com.team1060.golf.auth.api.response.ViewMember.LoginUser;
+import com.team1060.golf.auth.service.MailService;
 import com.team1060.golf.auth.service.MemberService;
 
+import jakarta.mail.MessagingException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * <pre>
  * 회원 api
  * </pre>
  * 
- * @author KJY 
+ * @author KJY
  * @since 2023.12.25
  */
 
@@ -38,14 +45,15 @@ import lombok.extern.log4j.Log4j2;
 public class MemberApi {
 	private final MemberService memberService;
 	private final PasswordEncoder encoder;
-	
-	// 기존 회원 전체 조회 
+	private final MailService mailService;
+
+	// 기존 회원 전체 조회
 	@GetMapping("/join")
 	@CrossOrigin
-	public List<ViewMember> getEmailList(){
+	public List<ViewMember> getEmailList() {
 		return memberService.selectAll();
 	}
-	
+
 	// 회원가입
 	@PostMapping("/join")
 	@CrossOrigin
@@ -72,12 +80,12 @@ public class MemberApi {
 		}
 	}
 
-	// 이메일 중복 체크
-//	@GetMapping("/join")
-//	@CrossOrigin
-//	public ResponseEntity<Boolean> checkedEmail(@RequestParam("email") String email) {
-//	    boolean isCheck = memberService.checkedEmail(email);
-//	    return ResponseEntity.ok(isCheck);
-//	}
-
+	// 이메일 인증
+	@PostMapping("login/email")
+	@CrossOrigin
+	public String mailConfirm(@RequestBody EmailRequest emailDto)
+			throws MessagingException, UnsupportedEncodingException {
+		String authCode = mailService.sendEmail(emailDto.getEmail());
+		return authCode;
+	}
 }
