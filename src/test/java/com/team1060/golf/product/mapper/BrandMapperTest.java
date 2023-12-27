@@ -1,3 +1,4 @@
+
 package com.team1060.golf.product.mapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
