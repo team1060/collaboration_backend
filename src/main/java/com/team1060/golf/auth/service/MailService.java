@@ -11,7 +11,14 @@ import lombok.RequiredArgsConstructor;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Random;
-
+/**
+ * <pre>
+ * 메일 인증 
+ * </pre>
+ * 
+ * @author KJY
+ * @since 2023.12.28
+ */
 @Service
 @RequiredArgsConstructor
 public class MailService {
