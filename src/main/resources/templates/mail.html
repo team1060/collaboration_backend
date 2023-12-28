@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>골프의민족 회원가입 인증 코드</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .code-container {
+            border: 1px solid #000;
+            padding: 10px;
+            margin-top: 20px;
+        }
+
+        h3 {
+            color: blue;
+            margin-bottom: 10px;
+        }
+
+        .code {
+            font-size: 130%;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>안녕하세요.</h1>
+        <h1>골프의민족입니다.</h1>
+        <br>
+        <p>아래 코드를 회원가입 창으로 돌아가 입력해주세요. 야호</p>
+        <br>
+
+        <div class="code-container">
+            <h3>회원가입 인증 코드 입니다.</h3>
+            <div class="code" th:text="${code}"></div>
+        </div>
+        <br />
+    </div>
+</body>
+
+</html>

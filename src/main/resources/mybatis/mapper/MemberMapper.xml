@@ -10,15 +10,14 @@
 		INSERT INTO tbl_member (
 		email, nickname, username,
 		password, regdate,
-		password_changed_at, birthdate, phone_number, type,
+		phone_number, type,
 		auth_data,
-		is_sms_consent, is_email_consent, gender, telecom, is_korean
+		is_sms_consent, is_email_consent
 		) VALUES (
 		#{email}, #{nickname}, #{username}, #{password}, #{regdate},
-		#{password_changed_at}, #{birthdate}, #{phone_number}, #{type},
+		#{phone_number}, #{type},
 		#{auth_data},
-		#{is_sms_consent}, #{is_email_consent}, #{gender},
-		#{telecom}, #{is_korean}
+		#{is_sms_consent}, #{is_email_consent}
 		)
 	</insert>
 
