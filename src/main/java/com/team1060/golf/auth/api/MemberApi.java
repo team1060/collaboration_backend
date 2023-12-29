@@ -53,7 +53,7 @@ public class MemberApi {
 	public List<ViewMember> getEmailList() {
 		return memberService.selectAll();
 	}
-
+	
 	// 회원가입
 	@PostMapping("/join")
 	@CrossOrigin

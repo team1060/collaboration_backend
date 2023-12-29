@@ -3,6 +3,7 @@ package com.team1060.golf.product.api;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,7 +44,7 @@ public class ProductApi {
 
 		private final ProductService productService;
 		
-		// 상품 기본 조회
+//		// 상품 기본 조회
 //		@GetMapping("/products")
 //		@CrossOrigin
 //		public List<ViewAllProduct> findAll(@ModelAttribute SearchProductRequest request) {
@@ -55,6 +56,18 @@ public class ProductApi {
 //				
 //			}
 //		}
+		
+		// 전체 상품 조회 
+		@GetMapping("/products")
+		public List<Map<String, Object>> getProductList(){
+			return productService.getProductList();
+		}
+		
+		// 상품 상세페이지 
+		@GetMapping("/products/{product_no}")
+		public List<Map<String, Object>> getProduct(@PathVariable Long product_no){
+			return productService.getProductListItem(product_no);
+		}
 		
 		// 브랜드 추가
 		@PostMapping("/product")
