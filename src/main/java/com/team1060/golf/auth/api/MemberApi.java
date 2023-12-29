@@ -79,7 +79,7 @@ public class MemberApi {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인실패");
 		}
 	}
-
+	
 	// 이메일 인증
 	@PostMapping("login/email")
 	@CrossOrigin
