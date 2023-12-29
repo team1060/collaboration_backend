@@ -56,12 +56,16 @@ public class BrandApi {
 		@CrossOrigin
 		public ResponseEntity<String> registerBrands(@RequestBody List<RegisterBrandRequest> requests) {
 		    try {
+		    	int idx = 1;
 		        for (RegisterBrandRequest request : requests) {
+		        	log.info(idx);
+		        	idx++;
 		            brandService.register(request);
 		        }
 		        log.info("register");
 		        return ResponseEntity.ok("브랜드 추가 완료");
 		    } catch (Exception e) {
+		    	
 		        e.printStackTrace();
 		        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("브랜드 추가 실패");
 		    }
@@ -82,7 +86,7 @@ public class BrandApi {
 		}
 		
 		// 브랜드 단일 수정
-		@PutMapping("/brand")
+//		@PutMapping("/brand")
 		@CrossOrigin
 		public ResponseEntity<String> modifyBrand(@RequestBody ModifyBrandRequest request) {
 			try {
@@ -95,7 +99,7 @@ public class BrandApi {
 		}
 
 		// 브랜드 삭제
-		@DeleteMapping("/brand/{brand_no}")
+//		@DeleteMapping("/brand/{brand_no}")
 		public ResponseEntity<String> removeCourse(@PathVariable(name = "brand_no") Long brand_no) {
 			try {
 				brandService.remove(brand_no);

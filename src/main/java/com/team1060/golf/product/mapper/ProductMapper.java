@@ -31,7 +31,7 @@ public interface ProductMapper {
 	 */
     List<ViewAllProduct> selectAll(SearchProductRequest request);
 
-	int create(RegisterProductRequest request);
+	int createProduct(RegisterProductRequest request);
     
 //    /**
 //     * 페이지네이션을 위한 제품 목록 조회 메서드

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team1060.golf.product.mapper.ProductImageMapper">
+	<insert id="insertProductImage">
+		INSERT INTO tbl_p_image (uuid, product_no, type, path)
+	    VALUES (#{uuid}, #{product_no}, #{type}, #{path}); 
+	</insert>
+</mapper>

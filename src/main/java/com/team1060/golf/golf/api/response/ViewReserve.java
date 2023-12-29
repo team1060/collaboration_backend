@@ -1,4 +1,4 @@
-package com.team1060.golf.golf.api.response;
+	package com.team1060.golf.golf.api.response;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

@@ -15,10 +15,10 @@ public class ViewAllProduct {
 	private final Long product_no;
 	private final Long brand_no;
 	private final String product;
-	private final Integer price;
-	private final Float discount;
-	private final boolean is_shop_pickup;
-	private final boolean is_shop_delivery;
+	private final int price;
+	private final float discount;
+	private final int is_shop_pickup;
+	private final int is_shop_delivery;
 	
 	private final List<Image> images;
 	private final List<Review> reviews;
@@ -32,7 +32,7 @@ public class ViewAllProduct {
 		private final String path;
 		private final String type;
 	}
-	
+		
 	@Getter
 	@Builder
 	@AllArgsConstructor
