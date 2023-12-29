@@ -1,6 +1,7 @@
 package com.team1060.golf.product.api;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,7 @@ import com.team1060.golf.product.api.request.RegisterBrandRequest;
 import com.team1060.golf.product.api.request.RegisterProductRequest;
 import com.team1060.golf.product.api.request.SearchProductRequest;
 import com.team1060.golf.product.api.response.ViewAllProduct;
+import com.team1060.golf.product.api.response.ViewProduct;
 import com.team1060.golf.product.service.ProductService;
 
 import lombok.RequiredArgsConstructor;
@@ -42,18 +44,24 @@ public class ProductApi {
 		private final ProductService productService;
 		
 		// 상품 기본 조회
-		@GetMapping("/product")
-		@CrossOrigin
-		public List<ViewAllProduct> findAll(@ModelAttribute SearchProductRequest request) {
-			return productService.getList(request);
-		}
+//		@GetMapping("/products")
+//		@CrossOrigin
+//		public List<ViewAllProduct> findAll(@ModelAttribute SearchProductRequest request) {
+//			List<ViewProduct> products = productService.searchProducts(request);
+//			
+//	        List<ViewProduct> responseViews = new ArrayList<>();
+//	        for (ViewProduct product : products) {
+//	        	ViewAllProduct viewAllProduct = build
+//				
+//			}
+//		}
 		
 		// 브랜드 추가
 		@PostMapping("/product")
 		@CrossOrigin
 		public ResponseEntity<String> registerProduct(@RequestBody RegisterProductRequest request) {
 			try {
-				productService.register(request);
+				productService.registerProduct(request);
 				log.info("register 완료");
 				return ResponseEntity.ok("상품 추가 완료");
 			} catch (Exception e) {
@@ -68,13 +76,14 @@ public class ProductApi {
 		public ResponseEntity<String> registerProducts(@RequestBody List<RegisterProductRequest> requests) {
 		    try {
 		        for (RegisterProductRequest request : requests) {
-		        	productService.register(request);
+		        	productService.registerProduct(request);
 		        }
 		        log.info("register 완료");
 		        return ResponseEntity.ok("상품 추가 완료");
 		    } catch (Exception e) {
 		        e.printStackTrace();
-		        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("상품 추가 실패");
+		        log.error("상품 추가 실패 - 요청 데이터: " + e);
+		        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("상품 추가 실패" + e.getMessage());
 		    }
 		}
 }

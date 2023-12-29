@@ -47,6 +47,17 @@ dependencies {
     //http://localhost:8081/swagger-ui/index.html
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
 
+	// https://mvnrepository.com/artifact/org.jsoup/jsoup
+	implementation 'org.jsoup:jsoup:1.15.3'
+	
+	// https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
+	implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
+
+		// 프로젝트의 의존성 설정에 WebDriverManager 추가
+	// https://github.com/bonigarcia/webdrivermanager
+	implementation 'io.github.bonigarcia:webdrivermanager:4.4.3'
+	
+
 }
 
 tasks.named('test') {

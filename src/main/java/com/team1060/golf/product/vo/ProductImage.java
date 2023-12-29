@@ -12,5 +12,4 @@ public class ProductImage {
 	private Long product_no;
 	private String path;
 	private String type;
-	private String field;
 }

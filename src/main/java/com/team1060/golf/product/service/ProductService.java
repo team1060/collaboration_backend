@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.team1060.golf.product.api.request.RegisterProductRequest;
 import com.team1060.golf.product.api.request.SearchProductRequest;
 import com.team1060.golf.product.api.response.ViewAllProduct;
+import com.team1060.golf.product.api.response.ViewProduct;
 import com.team1060.golf.product.mapper.ProductMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,8 @@ public class ProductService {
 	
 	/**
 	 * <pre>
-	 * 모든 제품을 선택하는 메서드입니다.
+	 * 모든 상품을 출력하는 서비스 메서드입니다.
+	 * 파라미터를 통해 검색 조건줄을 추가할 수 있습니다.
 	 * </pre>
 	 * @author GHL
 	 * @since 2023.12.26
@@ -38,9 +40,20 @@ public class ProductService {
 		// TODO Auto-generated method stub
 		return productMapper.selectAll(request);
 	}
-
-	public int register(RegisterProductRequest request) {
-		return productMapper.create(request);
+	
+	/**
+	 * <pre>
+	 * 상품을 create하는 서비스 메서드입니다.
+	 * </pre>
+	 * @author GHL
+	 * @since 2023.12.26
+	 * 
+	 */
+	public int registerProduct(RegisterProductRequest request) {
+		return productMapper.createProduct(request);
 		
 	}
+
+//	public List<ViewProduct> searchProducts(SearchProductRequest request) {
+//	}
 }

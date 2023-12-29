@@ -38,5 +38,10 @@
         <!-- 페이지네이션을 위한 LIMIT 절 -->
         LIMIT #{page}, #{size}
     </select>
+    
+	<insert id="createProduct">
+	    INSERT INTO tbl_product (brand_no, product, price, discount, benefit, no_interest_installment, is_shop_pickup, is_shop_delivery, regdate)
+	    VALUES (#{brand_no}, #{product}, #{price}, #{discount}, #{benefit}, #{no_interest_installment}, #{is_shop_pickup}, #{is_shop_delivery}, #{regdate}); 
+	</insert>
 
 </mapper>
