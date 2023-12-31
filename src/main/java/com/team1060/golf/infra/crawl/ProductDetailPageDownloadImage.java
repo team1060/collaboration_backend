@@ -15,7 +15,7 @@ public class ProductDetailPageDownloadImage {
 			List<ProductImage> productImages = imageData.getProductImages();
 			
 			for (ProductImage productImage : productImages) {
-				downloadImage(productImage.getImageUrl(), "product/" + productImage.getProduct_no(), productImage.getImageName());
+				downloadImage(productImage.getImageUrl(), "src/main/resources/static/img/product/" + productImage.getProduct_no(), productImage.getImageName());
 			}
 
 	}
@@ -29,6 +29,11 @@ public class ProductDetailPageDownloadImage {
 			// 디렉토리가 존재하지 않으면 생성
             Files.createDirectories(Path.of(directory));
             
+            if (Files.exists(path)) {
+                // 이미지가 이미 존재하는 경우 기존 이미지를 삭제
+                Files.delete(path);
+                System.out.println("기존 이미지 삭제: " + path.toString());
+            }
             // 이미지 다운로드
             Files.copy(url.openStream(), path);
             System.out.println("Downloading... : " + path.toString());
