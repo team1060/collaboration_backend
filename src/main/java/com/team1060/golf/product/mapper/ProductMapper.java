@@ -2,6 +2,7 @@ package com.team1060.golf.product.mapper;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -32,7 +33,13 @@ public interface ProductMapper {
     List<ViewAllProduct> selectAll(SearchProductRequest request);
 
 	int createProduct(RegisterProductRequest request);
+	
+	// 상품별 이미지 조회 
+	List<Map<String, Object>> getProductListItem(Long product_no);
     
+	// 전체상품 목록 
+	List<Map<String, Object>> getProductList();
+	
 //    /**
 //     * 페이지네이션을 위한 제품 목록 조회 메서드
 //     *

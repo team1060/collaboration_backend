@@ -2,6 +2,7 @@ package com.team1060.golf.product.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -36,10 +37,6 @@ public class ProductService {
 	 * @param searchKeyword 검색 키워드
 	 * @return 제품 목록
 	 */
-	public List<ViewAllProduct> getList(SearchProductRequest request) {
-		// TODO Auto-generated method stub
-		return productMapper.selectAll(request);
-	}
 	
 	/**
 	 * <pre>
@@ -52,6 +49,14 @@ public class ProductService {
 	public int registerProduct(RegisterProductRequest request) {
 		return productMapper.createProduct(request);
 		
+	}
+	
+	public List<Map<String, Object>>getProductListItem(Long product_no) {
+		return productMapper.getProductListItem(product_no);
+	}
+	
+	public List<Map<String, Object>>getProductList() {
+		return productMapper.getProductList();
 	}
 
 //	public List<ViewProduct> searchProducts(SearchProductRequest request) {

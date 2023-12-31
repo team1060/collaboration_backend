@@ -1,5 +1,6 @@
 package com.team1060.golf.product.api.response;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -16,12 +17,13 @@ public class ViewAllProduct {
 	private final Long brand_no;
 	private final String product;
 	private final int price;
-	private final float discount;
+	private final ZonedDateTime regdate;
+	private final Float discount;
 	private final int is_shop_pickup;
 	private final int is_shop_delivery;
 	
-	private final List<Image> images;
-	private final List<Review> reviews;
+	private List<Image> images;
+	private List<Review> reviews;
 	
 	@Getter
 	@Builder
