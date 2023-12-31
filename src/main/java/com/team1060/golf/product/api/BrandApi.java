@@ -31,14 +31,14 @@ import lombok.extern.log4j.Log4j2;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/admin")
+@RequestMapping("/api")
 @Log4j2
 public class BrandApi {
 
 		private final BrandService brandService;
 
 		// 브랜드 추가
-		@PostMapping("/brand")
+		@PostMapping("/admin/brand")
 		@CrossOrigin
 		public ResponseEntity<String> registerBrand(@RequestBody RegisterBrandRequest request) {
 			try {
@@ -52,7 +52,7 @@ public class BrandApi {
 		}
 		
 		// 브랜드 여러개 추가 (RequestBody를 List로 받고, forEach로 requests 돌리기
-		@PostMapping("/brands")
+		@PostMapping("/admin/brands")
 		@CrossOrigin
 		public ResponseEntity<String> registerBrands(@RequestBody List<RegisterBrandRequest> requests) {
 		    try {
@@ -86,7 +86,7 @@ public class BrandApi {
 		}
 		
 		// 브랜드 단일 수정
-//		@PutMapping("/brand")
+//		@PutMapping("/admin/brand")
 		@CrossOrigin
 		public ResponseEntity<String> modifyBrand(@RequestBody ModifyBrandRequest request) {
 			try {
@@ -99,7 +99,7 @@ public class BrandApi {
 		}
 
 		// 브랜드 삭제
-//		@DeleteMapping("/brand/{brand_no}")
+//		@DeleteMapping("/admin/brand/{brand_no}")
 		public ResponseEntity<String> removeCourse(@PathVariable(name = "brand_no") Long brand_no) {
 			try {
 				brandService.remove(brand_no);
