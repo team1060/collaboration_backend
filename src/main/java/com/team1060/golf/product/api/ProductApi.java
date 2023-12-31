@@ -31,14 +31,14 @@ import lombok.extern.log4j.Log4j2;
 
 /**
  * <pre>
- * 상품 api
+ * 상품 api & 상품별 이미지 조회 
  * </pre>
- * @author GHL
+ * @author GHL, KJY
  * @since 2023.12.26
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/admin")
+@RequestMapping("/api")
 @Log4j2
 public class ProductApi {
 
@@ -58,7 +58,8 @@ public class ProductApi {
 //		}
 		
 		// 전체 상품 조회 
-		@GetMapping("/products")
+		@GetMapping("/product")
+		@CrossOrigin
 		public List<Map<String, Object>> getProductList(){
 			return productService.getProductList();
 		}
@@ -70,7 +71,7 @@ public class ProductApi {
 		}
 		
 		// 브랜드 추가
-		@PostMapping("/product")
+		@PostMapping("/admin/product")
 		@CrossOrigin
 		public ResponseEntity<String> registerProduct(@RequestBody RegisterProductRequest request) {
 			try {
@@ -84,7 +85,7 @@ public class ProductApi {
 		}
 		
 		// 브랜드 여러개 추가 (RequestBody를 List로 받고, forEach로 requests 돌리기
-		@PostMapping("/products")
+		@PostMapping("/admin/products")
 		@CrossOrigin
 		public ResponseEntity<String> registerProducts(@RequestBody List<RegisterProductRequest> requests) {
 		    try {
