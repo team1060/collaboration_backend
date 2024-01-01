@@ -65,7 +65,7 @@ public class ProductApi {
 		}
 		
 		// 상품 상세페이지 
-		@GetMapping("/products/{product_no}")
+		@GetMapping("/product/{product_no}")
 		public List<Map<String, Object>> getProduct(@PathVariable Long product_no){
 			return productService.getProductListItem(product_no);
 		}

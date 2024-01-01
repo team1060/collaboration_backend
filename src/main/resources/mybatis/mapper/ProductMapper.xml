@@ -11,21 +11,22 @@
 		SELECT
 		p.product_no,
 		p.brand_no,
+		pb.brand_name,
 		p.product,
 		p.price,
 		p.regdate,
 		p.discount,
 		p.is_shop_pickup,
 		p.is_shop_delivery,
-		i.uuid,
 		i.path,
 		i.product_no AS image_product_no,
 		i.type
 		FROM
 		tbl_product p
 		LEFT JOIN
-		tbl_p_image i ON p.product_no =
-		i.product_no
+		tbl_p_image i ON p.product_no = i.product_no
+		LEFT JOIN
+		tbl_p_brand pb ON p.brand_no = pb.brand_no
 		WHERE
 		p.product_no = #{product_no};
 	</select>
@@ -35,6 +36,7 @@
 		SELECT
 		p.product_no,
 		p.brand_no,
+		pb.brand_name,
 		p.product,
 		p.price,
 		p.regdate,
@@ -47,6 +49,11 @@
 		FROM
 		tbl_product p
 		LEFT JOIN
-		tbl_p_image i ON p.product_no = i.product_no where i.type = 'image_300'
+		tbl_p_image i ON p.product_no = i.product_no
+		LEFT JOIN
+		tbl_p_brand pb ON p.brand_no = pb.brand_no
+		WHERE
+		i.type = 'image_300';
+
 	</select>
 </mapper>
