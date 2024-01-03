@@ -62,16 +62,14 @@ GROUP BY
     p.product_no, b.brand_name, p.product, p.price, p.regdate, p.discount, p.is_shop_pickup, p.is_shop_delivery
 ORDER BY
     p.product_no; -- You might need to adjust the ORDER BY clause based on your sorting requirements
-
-
 		
-	</select>
 
 	<!-- 상품 목록 페이지 -->
 	<select id="getProductList" resultType="java.util.HashMap">
 		SELECT
 		p.product_no,
 		p.brand_no,
+		pb.brand_name,
 		p.product,
 		p.price,
 		p.regdate,
@@ -84,6 +82,11 @@ ORDER BY
 		FROM
 		tbl_product p
 		LEFT JOIN
-		tbl_p_image i ON p.product_no = i.product_no where i.type = 'image_300'
+		tbl_p_image i ON p.product_no = i.product_no
+		LEFT JOIN
+		tbl_p_brand pb ON p.brand_no = pb.brand_no
+		WHERE
+		i.type = 'image_300';
+
 	</select>
 </mapper>
