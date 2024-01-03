@@ -62,7 +62,7 @@ GROUP BY
     p.product_no, b.brand_name, p.product, p.price, p.regdate, p.discount, p.is_shop_pickup, p.is_shop_delivery
 ORDER BY
     p.product_no; -- You might need to adjust the ORDER BY clause based on your sorting requirements
-		
+	</select>
 
 	<!-- 상품 목록 페이지 -->
 	<select id="getProductList" resultType="java.util.HashMap">
