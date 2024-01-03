@@ -65,7 +65,8 @@ public class ProductApi {
 		}
 		
 		// 상품 상세페이지 
-		@GetMapping("/product/{product_no}")
+		@GetMapping("/products/{product_no}")
+		@CrossOrigin
 		public List<Map<String, Object>> getProduct(@PathVariable Long product_no){
 			return productService.getProductListItem(product_no);
 		}
