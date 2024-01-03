@@ -6,28 +6,65 @@
 <mapper
 	namespace="com.team1060.golf.product.mapper.ProductMapper">
 
-	<!-- 상품별 이미지 1개 조회 -->
+	<!-- 상품 상세페이지 조회 -->
 	<select id="getProductListItem" resultType="java.util.HashMap">
-		SELECT
-		p.product_no,
-		p.brand_no,
-		p.product,
-		p.price,
-		p.regdate,
-		p.discount,
-		p.is_shop_pickup,
-		p.is_shop_delivery,
-		i.uuid,
-		i.path,
-		i.product_no AS image_product_no,
-		i.type
-		FROM
-		tbl_product p
-		LEFT JOIN
-		tbl_p_image i ON p.product_no =
-		i.product_no
-		WHERE
-		p.product_no = #{product_no};
+SELECT
+    p.product_no,
+    b.brand_name,
+    p.product,
+    p.price,
+    p.regdate,
+    p.discount,
+    p.is_shop_pickup,
+    p.is_shop_delivery,
+    (
+        SELECT JSON_ARRAYAGG(
+            JSON_OBJECT(
+                'uuid', i.uuid,
+                'path', i.path,
+                'image_product_no', i.product_no,
+                'type', i.type
+            )
+        )
+        FROM tbl_p_image i
+        WHERE p.product_no = i.product_no AND i.type LIKE '%detail%'
+    ) AS image_details,
+    (
+        SELECT JSON_ARRAYAGG(
+            JSON_OBJECT(
+                'uuid', i.uuid,
+                'path', i.path,
+                'image_product_no', i.product_no,
+                'type', i.type
+            )
+        )
+        FROM tbl_p_image i
+        WHERE p.product_no = i.product_no AND i.type LIKE '%image_600%'
+    ) AS image_prdts,
+    (
+        SELECT JSON_ARRAYAGG(
+            JSON_OBJECT(
+                'option_no', o.option_no,
+                'option_name', o.name,
+                'option_count', o.count
+            )
+        )
+        FROM tbl_p_option o
+        WHERE p.product_no = o.product_no
+    ) AS product_options
+FROM
+    tbl_product p
+LEFT JOIN
+    tbl_p_brand b ON p.brand_no = b.brand_no
+WHERE
+    p.product_no = #{product_no}
+GROUP BY
+    p.product_no, b.brand_name, p.product, p.price, p.regdate, p.discount, p.is_shop_pickup, p.is_shop_delivery
+ORDER BY
+    p.product_no; -- You might need to adjust the ORDER BY clause based on your sorting requirements
+
+
+		
 	</select>
 
 	<!-- 상품 목록 페이지 -->
