@@ -31,7 +31,9 @@ import lombok.Setter;
 public class RegisterAndModifyMember {
 	private String email; // 이메일 
 	private String nickname; // 닉네임 
-	private String username; // 이름 
+	private String name; // 이름 
+	private String username; // 이메일 
+	private String role; // user, admin 
 	private String password; // 비밀번호 
 	private ZonedDateTime regdate; // 가입일 
 	private String phone_number; // 휴대폰 번호 
