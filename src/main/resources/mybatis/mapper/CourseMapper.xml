@@ -13,8 +13,8 @@
 
 	<!-- 코스 등록 -->
 	<insert id="insert">
-    INSERT INTO tbl_g_course(golf_no, course_name, greenpee, golf_time, golf_date)
-    VALUES (#{golf_no}, #{course_name}, #{greenpee}, #{golf_time, jdbcType=TIMESTAMP}, #{golf_date, jdbcType=DATE})
+    INSERT INTO tbl_g_course(golf_no, course_name, greenpee, golf_time, golf_date,golf_status)
+    VALUES (#{golf_no}, #{course_name}, #{greenpee}, #{golf_time, jdbcType=TIMESTAMP}, #{golf_date, jdbcType=DATE}, #{golf_status})
 </insert>
 
 
@@ -28,7 +28,7 @@
 	<update id="update">
 		UPDATE tbl_g_course
 		SET course_name=#{course_name},
-		greenpee=#{greenpee}, golf_time=#{golf_time}, golf_date=#{golf_date}
+		greenpee=#{greenpee}, golf_time=#{golf_time}, golf_date=#{golf_date},golf_status=#{golf_status},golf_no=#{golf_no}
 		WHERE course_no=#{course_no}
 	</update>
 	
