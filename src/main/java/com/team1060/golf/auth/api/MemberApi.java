@@ -1,6 +1,7 @@
 package com.team1060.golf.auth.api;
 
 import java.io.UnsupportedEncodingException;
+import java.time.Duration;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ import com.team1060.golf.auth.api.request.EmailRequest;
 import com.team1060.golf.auth.api.request.RegisterAndModifyMember;
 import com.team1060.golf.auth.api.response.ViewMember;
 import com.team1060.golf.auth.api.response.ViewMember.LoginUser;
+import com.team1060.golf.auth.config.jwt.TokenProvider;
 import com.team1060.golf.auth.service.MailService;
 import com.team1060.golf.auth.service.MemberService;
 
@@ -46,6 +48,7 @@ public class MemberApi {
 	private final MemberService memberService;
 	private final PasswordEncoder encoder;
 	private final MailService mailService;
+	private final TokenProvider tokenProvider;
 
 	// 기존 회원 전체 조회
 	@GetMapping("/join")
@@ -74,7 +77,10 @@ public class MemberApi {
 	public ResponseEntity<String> login(@RequestBody LoginUser user) {
 		ViewMember member = memberService.select(user.getEmail());
 		if (member != null && encoder.matches(user.getPassword(), member.getPassword())) {
-			return ResponseEntity.ok("로그인 성공");
+			Duration expirationTime = Duration.ofMinutes(30); // 30분 
+			String token = tokenProvider.generateToken(user, expirationTime);
+			
+			return ResponseEntity.ok("로그인 성공" + token);
 		} else {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인실패");
 		}
