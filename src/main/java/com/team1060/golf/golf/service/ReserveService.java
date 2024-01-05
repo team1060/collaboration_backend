@@ -48,4 +48,20 @@ public class ReserveService {
 	public List<ViewReserve> selectEmail(String email){
 		return reserveMapper.selectEmail(email);
 	}
+	
+	// 예약 취소 
+	public int cancel(Long reserve_no) {
+		return reserveMapper.cancelGolf(reserve_no);
+	}
+	
+	// 취소 전 코스 번호 조회 
+	public ViewCourse getCourse(Long reserve_no) {
+		return reserveMapper.getCourse(reserve_no);
+	}
+	
+	// 예약 취소 후 코스 상태 수정 
+	public int golfUpdate(Long course_no) {
+		log.info("service");
+		return reserveMapper.golfUpdate(course_no);
+	}
 }

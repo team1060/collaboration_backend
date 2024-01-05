@@ -36,4 +36,6 @@ public class RegisterAndModifyReserve {
 	private LocalDate golf_date; // 예약날짜 
 	private int golf_status; // 예약 상태 (0)완료, (1)취소
 	private int greenpee;
+	
+	private ZonedDateTime cancelTimd; // 취소 날짜 + 시간 
 }

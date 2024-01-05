@@ -3,7 +3,13 @@ package com.team1060.golf.auth.api.response;
 import lombok.Builder;
 import lombok.Getter;
 
-
+/**
+ * <pre>
+ * 로그인 
+ * </pre>
+ * @author KJY
+ * @since 2024.01.05
+ */
 
 @Getter
 @Builder
