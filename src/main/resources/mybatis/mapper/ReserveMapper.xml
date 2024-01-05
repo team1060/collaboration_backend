@@ -14,20 +14,28 @@
 	<!-- 골프장 예약 -->
 	<insert id="insert">
 		INSERT INTO tbl_g_reserve (
-		reserve_no, course_no, email, golf_no, course_name, reserve_time, golf_time,
-		golf_date, golf_status, greenpee
+		reserve_no, course_no,
+		email, golf_no, course_name, reserve_time, golf_time,
+		golf_date,
+		golf_status, greenpee
 		) VALUES (
-		#{reserve_no}, #{course_no}, #{email}, #{golf_no}, #{course_name},
-		#{reserve_time, jdbcType=TIMESTAMP}, #{golf_time, jdbcType=TIME},
-		#{golf_date, jdbcType=DATE}, #{golf_status}, #{greenpee}
+		#{reserve_no}, #{course_no}, #{email}, #{golf_no},
+		#{course_name},
+		#{reserve_time, jdbcType=TIMESTAMP}, #{golf_time,
+		jdbcType=TIME},
+		#{golf_date, jdbcType=DATE}, 1, #{greenpee}
 		)
 	</insert>
-	
+
 	<!-- 코스 수정 -->
 	<update id="modify">
 		UPDATE tbl_g_course
-		SET golf_no = #{golf_no}, course_name=#{course_name}, greenpee=#{greenpee}, golf_time=#{golf_time}, golf_date=#{golf_date},golf_status=#{golf_status}
-		WHERE course_no=#{course_no}
+		SET golf_no = #{golf_no},
+		course_name=#{course_name}, greenpee=#{greenpee},
+		golf_time=#{golf_time},
+		golf_date=#{golf_date},golf_status=#{golf_status}
+		WHERE
+		course_no=#{course_no}
 	</update>
 
 	<!-- 코스 1개 조회 -->
@@ -35,10 +43,32 @@
 		resultType="com.team1060.golf.golf.api.response.ViewCourse">
 		SELECT * FROM tbl_g_course WHERE course_no = #{course_no}
 	</select>
-	
-	<!-- 아이디별 코스 조회  -->
-	<select id="selectEmail" resultType="com.team1060.golf.golf.api.response.ViewReserve">
+
+	<!-- 아이디별 코스 조회 -->
+	<select id="selectEmail"
+		resultType="com.team1060.golf.golf.api.response.ViewReserve">
 		select * from tbl_g_reserve where email = #{email}
+	</select>
+
+	<!-- 코스 예약 취소 -->
+	<update id="cancelGolf">
+		update tbl_g_reserve
+		set golf_status = 2, cancelTime = now()
+		where reserve_no = #{reserve_no}
+	</update>
+
+
+	<!-- 예약 취소 후 코스 상태 업데이트 -->
+	<update id="golfUpdate">
+		update tbl_g_course set golf_status = 0 where
+		course_no = #{course_no}
+	</update>
+
+	<!-- 예약취소된 코스 번호 조회 -->
+	<select id="getCourse"
+		resultType="com.team1060.golf.golf.api.response.ViewCourse">
+		select * from tbl_g_reserve where reserve_no =
+		#{reserve_no}
 	</select>
 
 </mapper>
