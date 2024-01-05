@@ -17,7 +17,7 @@
 		#{email}, #{nickname}, #{username}, #{password}, #{regdate},
 		#{phone_number}, #{type},
 		#{auth_data},
-		#{is_sms_consent}, #{is_email_consent}, #{name}, #{role}
+		#{is_sms_consent}, #{is_email_consent}, #{name}, 'user'
 		)
 	</insert>
 
