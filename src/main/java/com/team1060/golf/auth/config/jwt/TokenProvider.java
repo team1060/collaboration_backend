@@ -14,6 +14,7 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 /**
  * <pre>
@@ -24,6 +25,7 @@ import lombok.RequiredArgsConstructor;
  * @since 2024.01.03
  */
 
+@Log4j2
 @RequiredArgsConstructor
 @Service
 public class TokenProvider {
@@ -39,8 +41,8 @@ public class TokenProvider {
 				.setExpiration(expiry) // 토큰 만료시간 
 				.setSubject(user.getEmail()) // 이메일 주소 
 				.claim("email", user.getEmail()) 
-//				.claim("username", user.getUsername())
-//				.claim("role", user.getRole())
+				.claim("username", user.getUsername())
+				.claim("role", user.getRole())
 				.signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey())
 				.compact();
 	}
@@ -56,9 +58,14 @@ public class TokenProvider {
 					.setSigningKey(jwtProperties.getSecretKey())
 					.parseClaimsJws(token)
 					.getBody();
+			
 			return claims.getSubject();
+			
 		} catch (JwtException e) {
-			throw new JwtException("토큰이 틀림");
+			log.debug("Received Token: {}", token);
+//			log.debug("Claims: {}", claims);
+			log.error("토큰 검증 중 오류 발생", e);
+			throw new JwtException("토큰이 틀림" + e);
 			
 		}
 	}

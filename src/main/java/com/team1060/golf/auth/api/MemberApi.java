@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.team1060.golf.auth.api.request.EmailRequest;
 import com.team1060.golf.auth.api.request.RegisterAndModifyMember;
+import com.team1060.golf.auth.api.response.LoginResponse;
 import com.team1060.golf.auth.api.response.ViewMember;
 import com.team1060.golf.auth.api.response.ViewMember.LoginUser;
 import com.team1060.golf.auth.config.jwt.TokenProvider;
@@ -74,15 +75,20 @@ public class MemberApi {
 	// 로그인
 	@PostMapping("/login")
 	@CrossOrigin
-	public ResponseEntity<String> login(@RequestBody LoginUser user) {
+	public ResponseEntity<LoginResponse> login(@RequestBody LoginUser user) {
 		ViewMember member = memberService.select(user.getEmail());
 		if (member != null && encoder.matches(user.getPassword(), member.getPassword())) {
-			Duration expirationTime = Duration.ofMinutes(30); // 30분 
+			Duration expirationTime = Duration.ofDays(7); // 7일  
+			log.info("7일");
 			String token = tokenProvider.generateToken(user, expirationTime);
+			log.info(token);
+			log.info("hey");
 			
-			return ResponseEntity.ok("로그인 성공" + token);
+			LoginResponse response = new LoginResponse("로그인성공!", token, user.getEmail());
+			log.info(token);
+	           return ResponseEntity.ok(response);
 		} else {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인실패");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}
 	

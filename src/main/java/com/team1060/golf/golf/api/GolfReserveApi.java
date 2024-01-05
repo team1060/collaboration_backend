@@ -45,13 +45,13 @@ public class GolfReserveApi {
 	
 	
 	// 코스 전체 조회
-	@GetMapping("/reservation/add") // reservation/ 추가 하고 , 
+	@GetMapping("/reservation/detail") // reservation/ 추가 하고 , 
 	@CrossOrigin
 	public List<ViewCourse> selectAll() {
 		return reserveService.selectAllCourse();
 	}
 	// 골프장 예약 신청 
-	@PostMapping("/reservation/add")
+	@PostMapping("/reservation/detail")
 	@CrossOrigin
 	@Transactional
 	public ResponseEntity<?> reserveGolf(
@@ -70,10 +70,9 @@ public class GolfReserveApi {
 	}
 	
 	// 아이디별 예약 내역조회 
-	@GetMapping("reservation/add/{email}")
+	@GetMapping("reservation/confirm/{email}")
 	@CrossOrigin
 	public List<ViewReserve> selectEmail(@PathVariable(name ="email") String email) {
-		
 		return reserveService.selectEmail(email);
 	}
 }

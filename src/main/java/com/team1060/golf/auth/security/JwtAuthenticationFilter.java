@@ -26,15 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 public class JwtAuthenticationFilter extends OncePerRequestFilter{
 	
 	private final TokenProvider tokenProvider;
-	
-	private String parseBearerToken(HttpServletRequest request) {
-		String bearerToken = request.getHeader("Authorization");
-		 if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-		      return bearerToken.substring(7);
-		    }
-		    return null;
-		}
-	
+
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
@@ -58,12 +50,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 		} catch (Exception e) {
 			//토큰 만료 
 			logger.error("토큰만료");
+			e.printStackTrace();
 			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401 
 			response.getWriter().write("토큰만료");
 			return;
 		}
 		filterChain.doFilter(request, response);
 	}
-	
+	private String parseBearerToken(HttpServletRequest request) {
+		String bearerToken = request.getHeader("Authorization");
+		log.info("1");
+		 if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+			 log.info("2");
+		      return bearerToken.substring(7);
+		    }
+		    return null;
+		}
 	
 }
