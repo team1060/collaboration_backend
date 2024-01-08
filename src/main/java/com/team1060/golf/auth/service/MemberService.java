@@ -45,7 +45,7 @@ public class MemberService {
 		return memberMapper.select(email);
 	}
 	// 회원 수정 
-	public int modifyMember(RegisterAndModifyMember member) {
+	public int modifyMember(ViewMember member) {
 		return memberMapper.update(member);
 	}
 	// 회원 삭제 

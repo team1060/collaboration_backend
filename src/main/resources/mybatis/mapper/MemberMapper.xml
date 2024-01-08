@@ -48,26 +48,18 @@
 	</select>
 
 	<!-- 정보수정 -->
-	<update id="update">
-		UPDATE tbl_member SET
-		nickname = #{nickname},
-		username
-		= #{username},
-		password = #{password},
-		birthdate = #{birthdate},
-		phone_number = #{phone_number},
-		type = #{type},
-		auth_data =
-		#{auth_data},
-		is_sms_consent = #{is_sms_consent},
-		is_email_consent =
-		#{is_email_consent},
-		gender = #{gender},
-		telecom = #{telecom},
-		is_korean
-		= #{is_korean}
-		WHERE email = #{email}
-	</update>
+<update id="update">
+    UPDATE tbl_member SET
+    nickname = #{nickname},
+    username = #{username},
+    password = #{password},
+    phone_number = #{phone_number},
+    type = #{type},
+    auth_data = #{auth_data},
+    is_sms_consent = #{is_sms_consent},
+    is_email_consent = #{is_email_consent}
+    WHERE email = #{email}
+</update>
 
 	<!-- 회원 삭제 -->
 	<delete id="delete" parameterType="String">

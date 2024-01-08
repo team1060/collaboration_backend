@@ -63,7 +63,6 @@ public class TokenProvider {
 			
 		} catch (JwtException e) {
 			log.debug("Received Token: {}", token);
-//			log.debug("Claims: {}", claims);
 			log.error("토큰 검증 중 오류 발생", e);
 			throw new JwtException("토큰이 틀림" + e);
 			

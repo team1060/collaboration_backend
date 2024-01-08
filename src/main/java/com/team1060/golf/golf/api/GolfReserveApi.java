@@ -43,7 +43,7 @@ import lombok.extern.log4j.Log4j2;
 public class GolfReserveApi {
 
 	private final ReserveService reserveService;
-	
+	private final CourseService courseService;
 	
 	// 코스 전체 조회
 	@GetMapping("/reservation/detail") // reservation/ 추가 하고 , 
@@ -59,12 +59,17 @@ public class GolfReserveApi {
 	        @RequestBody RegisterAndModifyReserve golf
 	        ) {
 	    try {
-	        // 예약 서비스 호출 및 로깅 등을 수행
-//	    	golf.setGolf_status(0);
-	        reserveService.reserveGolf(golf);
-	        golf.setGolf_status(1);
-	        reserveService.modifyCourse(golf);
-	        return ResponseEntity.ok(golf + " 예약 완료");
+	    	// 동시예약 가능성을 막기 위해 
+	    	boolean golfData = courseService.getCourseNo(golf.getCourse_no());
+	    	log.info(golfData);
+	    	if(golfData) {
+	    		reserveService.reserveGolf(golf);
+	    		golf.setGolf_status(1);
+	    		reserveService.modifyCourse(golf);
+	    	} else {
+	    		ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("이미 예약이 완료된 코스입니다.");
+	    	}
+	    	return ResponseEntity.ok(golf + " 예약 완료");
 	    } catch (Exception e) {
 	    	e.printStackTrace();
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("골프장 예약 실패");

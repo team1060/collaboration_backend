@@ -29,4 +29,6 @@ public class ViewReserve {
 	private int golf_status; // 예약 상태 (1)예약완료, (2)예약취소
 	private String course_name; // 코스이름 
 	private int greenpee; // 그린피 
+	
+	private ZonedDateTime cancelTime; // 취소 날짜 + 시간 
 }
