@@ -35,7 +35,7 @@ public interface MemberMapper {
 	// 회원 1명 조회 
 	ViewMember select(String email);
 	// 회원 수정 
-	int update(RegisterAndModifyMember member);
+	int update(ViewMember member);
 	// 회원 삭제 
 	int delete(String email);
 }

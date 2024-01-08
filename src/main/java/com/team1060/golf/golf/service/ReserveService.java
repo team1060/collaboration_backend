@@ -33,9 +33,10 @@ public class ReserveService {
 		return reserveMapper.getList();
 	}
 	
+	// 동시예약 방지 
+	
 	// 골프장 예약 
 	public int reserveGolf (RegisterAndModifyReserve golf) {
-		log.info(golf);
 		return reserveMapper.insert(golf);
 	}
 	// status 수정 

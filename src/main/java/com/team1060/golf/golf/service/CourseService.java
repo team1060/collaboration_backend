@@ -32,6 +32,9 @@ public class CourseService {
 	public List<ViewCourse> selectAll() {
 		return courseMapper.getList();
 	}
+	public boolean getCourseNo(Long course_no) {
+		return courseMapper.getCourseNo(course_no);
+	}
 	// 코스 1개 조회 
 	public ViewCourse select(Long course_no) {
 		return courseMapper.select(course_no);

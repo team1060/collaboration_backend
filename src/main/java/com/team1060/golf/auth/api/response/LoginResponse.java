@@ -19,6 +19,10 @@ public class LoginResponse {
 	private String token;
 	private String message;
 	
+	public LoginResponse(String email, String message) {
+		this.email = email;
+		this.message = message;
+	}
 	
 	public LoginResponse(String email, String token, String message) {
 		this.email = email;
