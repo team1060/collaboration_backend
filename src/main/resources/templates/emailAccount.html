@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>골프의민족 인증 코드</title>
+    <title>골프의민족 아이디 전송</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -51,12 +51,10 @@
         <h1>안녕하세요.</h1>
         <h1>골프의민족입니다.</h1>
         <br>
-        <p>아래 코드를 홈페이지로 돌아가 입력해주세요.</p>
-        <br>
 
         <div class="code-container">
-            <h3>인증 코드 입니다.</h3>
-            <div class="code" th:text="${code}"></div>
+            <h3>고객님의 계정입니다.</h3>
+            <div class="code" th:text="${email}"></div>
         </div>
         <br />
     </div>
