@@ -62,20 +62,24 @@ public class CourseApi {
 	}
 
 	// 코스 1개 수정
-	@PutMapping("/course/{course_no}")
+	@PostMapping("/course/{course_no}")
 	@CrossOrigin
-	public ResponseEntity<String> modifyCourse(@PathVariable(name = "course_no")Long course_no, @RequestBody RegisterAndModifyCourse course) {
+	public ResponseEntity<String> modifyCourse(@PathVariable (name = "course_no") Long course_no , @RequestBody RegisterAndModifyCourse course) {
 		try {
+			log.info("S");
 			courseService.modifyCourse(course);
+			log.info("S");
 			return ResponseEntity.ok("코스 수정 완료");
 		} catch (Exception e) {
+
 			e.printStackTrace();
+
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("코스 수정 실패" + e.getMessage());
 		}
 	}
 
 	// 코스 삭제
-	@DeleteMapping("/course/{course_no}")
+	@PostMapping("/course/d/{course_no}")
 	public ResponseEntity<String> removeCourse(@PathVariable(name = "course_no") Long course_no) {
 		try {
 			courseService.removeCourse(course_no);
