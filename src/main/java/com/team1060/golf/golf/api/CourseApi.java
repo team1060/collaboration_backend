@@ -19,6 +19,7 @@ import com.team1060.golf.golf.api.response.ViewCourse;
 import com.team1060.golf.golf.service.CourseService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 /**
  * <pre>
@@ -31,6 +32,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/admin")
+@Log4j2
 public class CourseApi {
 	private final CourseService courseService;
 
@@ -62,11 +64,12 @@ public class CourseApi {
 	// 코스 1개 수정
 	@PutMapping("/course/{course_no}")
 	@CrossOrigin
-	public ResponseEntity<String> modifyCourse(@RequestBody RegisterAndModifyCourse course) {
+	public ResponseEntity<String> modifyCourse(@PathVariable(name = "course_no")Long course_no, @RequestBody RegisterAndModifyCourse course) {
 		try {
 			courseService.modifyCourse(course);
 			return ResponseEntity.ok("코스 수정 완료");
 		} catch (Exception e) {
+			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("코스 수정 실패" + e.getMessage());
 		}
 	}
@@ -78,7 +81,7 @@ public class CourseApi {
 			courseService.removeCourse(course_no);
 			return ResponseEntity.ok("코스 삭제 완료");
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("코스 삭 실패" + e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("코스 삭제 실패" + e.getMessage());
 		}
 	}
 	

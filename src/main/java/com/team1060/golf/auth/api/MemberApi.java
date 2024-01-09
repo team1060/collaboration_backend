@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,8 +22,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.team1060.golf.auth.api.request.EmailRequest;
+import com.team1060.golf.auth.api.request.FindEmailAndPassword;
 import com.team1060.golf.auth.api.request.PasswordChangeRequest;
 import com.team1060.golf.auth.api.request.RegisterAndModifyMember;
+import com.team1060.golf.auth.api.request.RemoveMember;
+import com.team1060.golf.auth.api.request.FindEmailAndPassword.FindPassword;
 import com.team1060.golf.auth.api.response.LoginResponse;
 import com.team1060.golf.auth.api.response.ViewMember;
 import com.team1060.golf.auth.api.response.ViewMember.LoginUser;
@@ -65,7 +69,6 @@ public class MemberApi {
 
 	// 회원가입
 	@PostMapping("/join")
-	@CrossOrigin
 	public ResponseEntity<String> joinMember(@RequestBody RegisterAndModifyMember member) {
 		try {
 			member.encodePassword(encoder);
@@ -79,7 +82,6 @@ public class MemberApi {
 
 	// 로그인
 	@PostMapping("/login")
-	@CrossOrigin
 	public ResponseEntity<LoginResponse> login(@RequestBody LoginUser user) {
 		ViewMember member = memberService.select(user.getEmail());
 		if (member != null && encoder.matches(user.getPassword(), member.getPassword())) {
@@ -93,8 +95,7 @@ public class MemberApi {
 	}
 
 	// 이메일 인증
-	@PostMapping("/login/email")
-	@CrossOrigin
+	@PostMapping({"/login/email", "/findpw"})
 	public String mailConfirm(@RequestBody EmailRequest emailDto)
 			throws MessagingException, UnsupportedEncodingException {
 		String authCode = mailService.sendEmail(emailDto.getEmail());
@@ -103,7 +104,6 @@ public class MemberApi {
 
 	// 이메일로 회원정보 조회
 	@PostMapping("/getEmail/{email}")
-	@CrossOrigin
 	public ResponseEntity<ViewMember> getEmail(@PathVariable(name = "email") String email) {
 		ViewMember member = memberService.select(email);
 		if (member != null) {
@@ -115,7 +115,6 @@ public class MemberApi {
 
 	// 회원정보 수정 로그인
 	@PostMapping("/mypage/login")
-	@CrossOrigin
 	public ResponseEntity<String> login(@RequestBody LoginUserMypage user) {
 		log.info("start");
 		ViewMember member = memberService.select(user.getEmail());
@@ -129,7 +128,6 @@ public class MemberApi {
 
 	// 비밀번호 변경
 	@PostMapping("/mypage/modify")
-	@CrossOrigin
 	@Transactional
 	public ResponseEntity<String> update(@RequestBody PasswordChangeRequest user) {
 		ViewMember member = memberService.select(user.getEmail());
@@ -141,10 +139,9 @@ public class MemberApi {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("수정 실패");
 		}
 	}
-	
-	// 닉네임 변경 
-	@PostMapping("/mypage/nickname/modify")
-	@CrossOrigin
+
+	// 닉네임 변경
+	@PutMapping("/mypage/modify")
 	public ResponseEntity<String> nicknameUpdate(@RequestBody RegisterAndModifyMember user) {
 		ViewMember member = memberService.select(user.getEmail());
 		if(member != null) {
@@ -154,5 +151,42 @@ public class MemberApi {
 		} else {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("닉네임 수정 실패");
 		}
+	}
+
+	// 탈퇴 신청
+	@DeleteMapping("/mypage/login/remove/{email}")
+	public ResponseEntity<String> removeMember(@PathVariable(name = "email")String email, @RequestBody RemoveMember user) {
+	    ViewMember member =  memberService.select(email);
+	    if(member != null && encoder.matches(user.getPassword(), member.getPassword())) {
+	        memberService.removeMember(member.getEmail());
+	        return ResponseEntity.ok("회원 삭제 완료");
+	    } else {
+	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("회원 삭제 실패");
+	    }
+	}
+	
+	// 아이디 찾기 
+	@PostMapping("/find")
+	public ResponseEntity<String> findEmail(@RequestBody FindEmailAndPassword member) throws MessagingException, UnsupportedEncodingException{
+		if(member != null) {
+			ViewMember user =  memberService.findEmail(member);
+			String send = mailService.sendEmailAccount(user.getEmail());
+			return ResponseEntity.ok(send); 
+		}else {
+	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("회원 실패");
+	    }
+	}
+	
+	// 비밀번호 찾기 
+	@PostMapping("/modify/pw")
+	public ResponseEntity<String> findPw(@RequestBody RegisterAndModifyMember user) {
+		ViewMember member = memberService.select(user.getEmail());
+		if(member != null) {
+			member.setPassword(BCrypt.hashpw(member.getPassword(), BCrypt.gensalt()));
+			memberService.modifyMember(member);
+		return ResponseEntity.ok("수정성공"); 
+	}else {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("수정 실패");
+    }
 	}
 }
