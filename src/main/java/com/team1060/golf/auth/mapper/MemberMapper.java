@@ -40,9 +40,10 @@ public interface MemberMapper {
 	// 회원 삭제 
 	int delete(String email);
 	
-	int adminupdate(ViewMember member);
-  
 	// 아이디찾기 
 	ViewMember findEmail(FindEmailAndPassword member);
+	
+	// 관리자페이지 수정
+	int adminupdate(RegisterAndModifyMember member);
 
 }
