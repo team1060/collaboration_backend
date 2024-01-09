@@ -37,7 +37,7 @@ public class WebSecurityConfig {
 	private final JwtAuthenticationFilter JwtAuthenticationFilter;
 	
 	private static  final String[] PERMIT_URL_ARRAY = {
-		"/","/golf/**", "/member/join/**", "/admin/golf/**" , "/api/member/**"
+		"/","/golf/**", "/member/join/**", "/admin/golf/**" , "/api/member/**", "/admin/**"
 	};
 	
 	@Bean

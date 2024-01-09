@@ -61,6 +61,21 @@
     WHERE email = #{email}
 </update>
 
+<!-- 정보수정 관리자페이지 -->
+<update id="memberupdate">
+    UPDATE tbl_member SET
+    nickname = #{nickname},
+    username = #{username},
+    password = #{password},
+    phone_number = #{phone_number},
+    type = #{type},
+    role = #{role}, <!-- 추가된 부분 -->
+    auth_data = #{auth_data},
+    is_sms_consent = #{is_sms_consent},
+    is_email_consent = #{is_email_consent}
+    WHERE email = #{email}
+</update>
+
 	<!-- 회원 삭제 -->
 	<delete id="delete" parameterType="String">
 		DELETE FROM tbl_member WHERE

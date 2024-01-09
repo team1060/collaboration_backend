@@ -38,4 +38,6 @@ public interface MemberMapper {
 	int update(ViewMember member);
 	// 회원 삭제 
 	int delete(String email);
+	
+	int adminupdate(ViewMember member);
 }
