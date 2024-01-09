@@ -33,9 +33,10 @@ public class ReserveService {
 		return reserveMapper.getList();
 	}
 	
+	// 동시예약 방지 
+	
 	// 골프장 예약 
 	public int reserveGolf (RegisterAndModifyReserve golf) {
-		log.info(golf);
 		return reserveMapper.insert(golf);
 	}
 	// status 수정 
@@ -47,5 +48,21 @@ public class ReserveService {
 	// 아이디별 예약 내역 조회 
 	public List<ViewReserve> selectEmail(String email){
 		return reserveMapper.selectEmail(email);
+	}
+	
+	// 예약 취소 
+	public int cancel(Long reserve_no) {
+		return reserveMapper.cancelGolf(reserve_no);
+	}
+	
+	// 취소 전 코스 번호 조회 
+	public ViewCourse getCourse(Long reserve_no) {
+		return reserveMapper.getCourse(reserve_no);
+	}
+	
+	// 예약 취소 후 코스 상태 수정 
+	public int golfUpdate(Long course_no) {
+		log.info("service");
+		return reserveMapper.golfUpdate(course_no);
 	}
 }

@@ -20,6 +20,7 @@ import lombok.Setter;
  */
 
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -37,6 +38,7 @@ public class ViewMember {
 	private int is_sms_consent; // true 1 , false 0 
 	private int is_email_consent; // true 1 , false 0 
 	
+	
 	@Getter
 	@Setter
 	@NoArgsConstructor
@@ -45,11 +47,28 @@ public class ViewMember {
 	    private String password;
 	    private String username; // 이름 
 		private String role; // user, admin 
+//		private String nickname;
+	}
+	
+	@Getter
+	@Setter
+	@NoArgsConstructor
+	public static class LoginUserMypage {
+	    private String email;
+	    private String password;
 	}
 	@Getter
 	@Setter
 	@NoArgsConstructor
 	public static class CheckedEmial {
 		private boolean is_checkedEmail;
+	}
+	
+	@Getter
+	@Setter
+	@NoArgsConstructor
+	public static class PwChange {
+		 private String email;
+		 private String password;
 	}
 }

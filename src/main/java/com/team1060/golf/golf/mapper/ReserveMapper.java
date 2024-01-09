@@ -39,5 +39,13 @@ public interface ReserveMapper {
 	List<ViewReserve> selectEmail(String email);
 	
 	// 골프장 예약 취소 
+	int cancelGolf(Long reserve_no);
+	
+	// 코스 상태 수정 전 조회 
+	ViewCourse getCourse(Long reserve_no);
+	
+	// 예약취소 후 코스 상태 수정 
+	int golfUpdate(Long course_no);
+	
 	
 }

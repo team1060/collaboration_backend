@@ -48,30 +48,43 @@
 	</select>
 
 	<!-- 정보수정 -->
-	<update id="update">
-		UPDATE tbl_member SET
-		nickname = #{nickname},
-		username
-		= #{username},
-		password = #{password},
-		birthdate = #{birthdate},
-		phone_number = #{phone_number},
-		type = #{type},
-		auth_data =
-		#{auth_data},
-		is_sms_consent = #{is_sms_consent},
-		is_email_consent =
-		#{is_email_consent},
-		gender = #{gender},
-		telecom = #{telecom},
-		is_korean
-		= #{is_korean}
-		WHERE email = #{email}
-	</update>
+<update id="update">
+    UPDATE tbl_member SET
+    nickname = #{nickname},
+    username = #{username},
+    password = #{password},
+    phone_number = #{phone_number},
+    type = #{type},
+    auth_data = #{auth_data},
+    is_sms_consent = #{is_sms_consent},
+    is_email_consent = #{is_email_consent}
+    WHERE email = #{email}
+</update>
+
+<!-- 정보수정 관리자페이지 -->
+<update id="memberupdate">
+    UPDATE tbl_member SET
+    nickname = #{nickname},
+    username = #{username},
+    password = #{password},
+    phone_number = #{phone_number},
+    type = #{type},
+    role = #{role}, <!-- 추가된 부분 -->
+    auth_data = #{auth_data},
+    is_sms_consent = #{is_sms_consent},
+    is_email_consent = #{is_email_consent}
+    WHERE email = #{email}
+</update>
 
 	<!-- 회원 삭제 -->
 	<delete id="delete" parameterType="String">
 		DELETE FROM tbl_member WHERE
 		email = #{email}
 	</delete>
+	
+	<!-- 이름과 전화번호로 아이디 찾기 -->
+	<select id="findEmail" resultType="com.team1060.golf.auth.api.response.ViewMember">
+		SELECT email FROM tbl_member WHERE NAME = #{name} and phone_number = #{phone_number}
+	</select>
+	
 </mapper>

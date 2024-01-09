@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,7 +43,7 @@ import lombok.extern.log4j.Log4j2;
 public class GolfReserveApi {
 
 	private final ReserveService reserveService;
-	
+	private final CourseService courseService;
 	
 	// 코스 전체 조회
 	@GetMapping("/reservation/detail") // reservation/ 추가 하고 , 
@@ -58,11 +59,17 @@ public class GolfReserveApi {
 	        @RequestBody RegisterAndModifyReserve golf
 	        ) {
 	    try {
-	        // 예약 서비스 호출 및 로깅 등을 수행
-	        reserveService.reserveGolf(golf);
-	        golf.setGolf_status(0);
-	        reserveService.modifyCourse(golf);
-	        return ResponseEntity.ok(golf + " 예약 완료");
+	    	// 동시예약 가능성을 막기 위해 
+	    	boolean golfData = courseService.getCourseNo(golf.getCourse_no());
+	    	log.info(golfData);
+	    	if(golfData) {
+	    		reserveService.reserveGolf(golf);
+	    		golf.setGolf_status(1);
+	    		reserveService.modifyCourse(golf);
+	    	} else {
+	    		ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("이미 예약이 완료된 코스입니다.");
+	    	}
+	    	return ResponseEntity.ok(golf + " 예약 완료");
 	    } catch (Exception e) {
 	    	e.printStackTrace();
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("골프장 예약 실패");
@@ -70,9 +77,24 @@ public class GolfReserveApi {
 	}
 	
 	// 아이디별 예약 내역조회 
-	@GetMapping("reservation/confirm/{email}")
+	@GetMapping("/reservation/confirm/{email}")
 	@CrossOrigin
 	public List<ViewReserve> selectEmail(@PathVariable(name ="email") String email) {
 		return reserveService.selectEmail(email);
+	}
+	
+	// 예약 취소 
+	@PostMapping("/reservation/cancel/{reserve_no}")
+	@CrossOrigin
+	@Transactional
+	public ResponseEntity<String> deleteGolf(@PathVariable(name = "reserve_no") Long reserve_no){
+		try {
+			reserveService.cancel(reserve_no);
+			ViewCourse course =  reserveService.getCourse(reserve_no);
+			reserveService.golfUpdate(course.getCourse_no());
+			return ResponseEntity.ok("취소완료");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("골프장 취소 실패");
+		}
 	}
 }

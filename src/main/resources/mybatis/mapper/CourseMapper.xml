@@ -13,9 +13,11 @@
 
 	<!-- 코스 등록 -->
 	<insert id="insert">
-    INSERT INTO tbl_g_course(golf_no, course_name, greenpee, golf_time, golf_date,golf_status)
-    VALUES (#{golf_no}, #{course_name}, #{greenpee}, #{golf_time, jdbcType=TIMESTAMP}, #{golf_date, jdbcType=DATE}, #{golf_status})
-</insert>
+		INSERT INTO tbl_g_course(golf_no, course_name, greenpee, golf_time,
+		golf_date,golf_status)
+		VALUES (#{golf_no}, #{course_name}, #{greenpee}, #{golf_time,
+		jdbcType=TIMESTAMP}, #{golf_date, jdbcType=DATE}, #{golf_status})
+	</insert>
 
 
 	<!-- 코스 1개 조회 -->
@@ -28,11 +30,12 @@
 	<update id="update">
 		UPDATE tbl_g_course
 		SET course_name=#{course_name},
-		greenpee=#{greenpee}, golf_time=#{golf_time}, golf_date=#{golf_date},golf_status=#{golf_status},golf_no=#{golf_no}
+		greenpee=#{greenpee}, golf_time=#{golf_time},
+		golf_date=#{golf_date},golf_status=#{golf_status},golf_no=#{golf_no}
 		WHERE course_no=#{course_no}
 	</update>
-	
-	
+
+
 	<!-- 코스 삭제 -->
 	<delete id="delete" parameterType="Long">
 		DELETE FROM tbl_g_course WHERE
@@ -44,16 +47,26 @@
 		parameterType="com.team1060.golf.golf.api.response.ViewCourse">
 		select * from tbl_g_course where golf_no = #{golf_no}
 	</select>
-	
-	<!-- 골프장 이름 + 날짜별 조회  -->
-	<select id="getGolfNameList" resultType="com.team1060.golf.golf.api.response.ViewCourse">
-		select * from tbl_g_course 
+
+	<!-- 골프장 이름 + 날짜별 조회 -->
+	<select id="getGolfNameList"
+		resultType="com.team1060.golf.golf.api.response.ViewCourse">
+		select * from tbl_g_course
 		where name = #{name}
-     	and golf_date = #{golf_date}
+		and golf_date = #{golf_date}
 	</select>
-	
+
 	<!-- 날짜별 코스 갯수 조회 -->
 	<select id="selectDataCourse" resultType="java.lang.Integer">
-		select count(*) AS course_count from tbl_g_course where golf_date = #{golf_date, jdbcType=DATE} and golf_status = 1
+		select count(*) AS
+		course_count from tbl_g_course where golf_date = #{golf_date,
+		jdbcType=DATE} and golf_status = 1
+	</select>
+
+	<!-- golf_status가 true인지 false인지 -->
+	<select id="getCourseNo">
+		SELECT *
+		from tbl_g_course
+		WHERE course_no = #{course_no} AND golf_status = 0;
 	</select>
 </mapper>

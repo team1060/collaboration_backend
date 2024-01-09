@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.team1060.golf.auth.api.request.FindEmailAndPassword;
 import com.team1060.golf.auth.api.request.RegisterAndModifyMember;
 import com.team1060.golf.auth.api.response.ViewMember;
 import com.team1060.golf.auth.api.response.ViewMember.LoginUser;
@@ -35,7 +36,13 @@ public interface MemberMapper {
 	// 회원 1명 조회 
 	ViewMember select(String email);
 	// 회원 수정 
-	int update(RegisterAndModifyMember member);
+	int update(ViewMember member);
 	// 회원 삭제 
 	int delete(String email);
+	
+	int adminupdate(ViewMember member);
+  
+	// 아이디찾기 
+	ViewMember findEmail(FindEmailAndPassword member);
+
 }

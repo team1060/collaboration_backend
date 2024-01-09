@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.team1060.golf.auth.api.request.FindEmailAndPassword;
 import com.team1060.golf.auth.api.request.RegisterAndModifyMember;
 import com.team1060.golf.auth.api.response.ViewMember;
 import com.team1060.golf.auth.api.response.ViewMember.LoginUser;
@@ -45,11 +46,15 @@ public class MemberService {
 		return memberMapper.select(email);
 	}
 	// 회원 수정 
-	public int modifyMember(RegisterAndModifyMember member) {
+	public int modifyMember(ViewMember member) {
 		return memberMapper.update(member);
 	}
 	// 회원 삭제 
 	public int removeMember(String email) {
 		return memberMapper.delete(email);
+	}
+	// 회원 아이디 찾기 
+	public ViewMember findEmail(FindEmailAndPassword member) {
+		return memberMapper.findEmail(member);
 	}
 }

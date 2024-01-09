@@ -40,7 +40,7 @@ public class MailService {
     }
 
     public MimeMessage createEmailForm(String email) throws MessagingException, UnsupportedEncodingException {
-        createCode();
+        createCode();  // 각 이메일에 대해 authNum이 생성되도록 보장
         String setFrom = "fanalgolfteam@gmail.com";
         String toEmail = email;
         String title = "골프의 민족 인증번호";
@@ -61,6 +61,36 @@ public class MailService {
         return authNum;
     }
 
+    // 이메일 생성 
+    public MimeMessage createEmailAccount(String email) throws MessagingException, UnsupportedEncodingException {
+//        createCode();  // 각 이메일에 대해 authNum이 생성되도록 보장
+        String setFrom = "fanalgolfteam@gmail.com";
+        String toEmail = email;
+        String title = "골프의 민족 아이디 전송";
+
+        MimeMessage message = emailSender.createMimeMessage();
+        message.addRecipients(MimeMessage.RecipientType.TO, toEmail);
+        message.setSubject(title);
+        message.setFrom(setFrom);
+        message.setText(setEmail(email), "utf-8", "html");
+
+        return message;
+    }
+
+    // 이메일로 계정 전송 
+    public String sendEmailAccount(String toEmail) throws MessagingException, UnsupportedEncodingException {
+        MimeMessage emailForm = createEmailAccount(toEmail);
+        emailSender.send(emailForm);
+
+        return toEmail;
+    }
+    
+    public String setEmail(String email) {
+    	Context context = new Context();
+    	context.setVariable("email", email);
+    	return templateEngine.process("emailAccount", context);
+    }
+    
     public String setContext(String code) {
         Context context = new Context();
         context.setVariable("code", code);
