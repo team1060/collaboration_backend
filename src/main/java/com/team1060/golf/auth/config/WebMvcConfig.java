@@ -18,24 +18,34 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer{
-
+	
+	private static final long MAX_AGE_SECS = 3600;
+	
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
-		registry.addMapping("/**")
-		.allowedOriginPatterns("*")
-        .allowedMethods("*")
-        .allowedHeaders("*")
-        .allowCredentials(true)
-        .maxAge(3000);
+	    registry.addMapping("/**")
+	            .allowedOrigins("http://localhost:3000")
+	            .allowedMethods("GET", "POST", "PUT", "DELETE")
+	            .allowedHeaders("*")
+	            .allowCredentials(true)
+	            .maxAge(MAX_AGE_SECS);
 	}
 	
 	@Bean
-    CorsConfigurationSource corsConfigurationSource() {
+	CorsConfigurationSource corsConfigurationSource() {
+	    final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+	    CorsConfiguration config = new CorsConfiguration();
+	    
+	    config.addAllowedOrigin("*");
+	    config.addAllowedMethod("OPTIONS");
+	    config.addAllowedMethod("HEAD");
+	    config.addAllowedMethod("GET");
+	    config.addAllowedMethod("POST");
+	    config.addAllowedMethod("PUT");
+	    config.addAllowedMethod("DELETE");
+	    config.addAllowedMethod("PATCH");
 
-        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-        source.registerCorsConfiguration("/**", config.applyPermitDefaultValues());
-
-        return source;
-    }
+	    source.registerCorsConfiguration("/**", config.applyPermitDefaultValues());
+	    return source;
+	}
 }

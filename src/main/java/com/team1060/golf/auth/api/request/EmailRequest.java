@@ -1,7 +1,11 @@
 package com.team1060.golf.auth.api.request;
 
 import jakarta.validation.constraints.NotEmpty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * <pre>
@@ -13,6 +17,10 @@ import lombok.Data;
  */
 
 @Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class EmailRequest {
 
     @NotEmpty(message = "이메일을 입력해주세요")

@@ -71,7 +71,9 @@ public class CourseApi {
 			log.info("S");
 			return ResponseEntity.ok("코스 수정 완료");
 		} catch (Exception e) {
-			
+
+			e.printStackTrace();
+
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("코스 수정 실패" + e.getMessage());
 		}
 	}
@@ -83,7 +85,7 @@ public class CourseApi {
 			courseService.removeCourse(course_no);
 			return ResponseEntity.ok("코스 삭제 완료");
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("코스 삭 실패" + e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("코스 삭제 실패" + e.getMessage());
 		}
 	}
 	

@@ -63,4 +63,12 @@ public class ViewMember {
 	public static class CheckedEmial {
 		private boolean is_checkedEmail;
 	}
+	
+	@Getter
+	@Setter
+	@NoArgsConstructor
+	public static class PwChange {
+		 private String email;
+		 private String password;
+	}
 }
