@@ -11,7 +11,6 @@ import lombok.Data;
  * @author KJY
  * @since 2023.12.27
  */
-
 @Data
 public class EmailRequest {
 
