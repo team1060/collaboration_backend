@@ -77,16 +77,57 @@ ORDER BY
 		p.is_shop_pickup,
 		p.is_shop_delivery,
 		i.path,
-		i.product_no AS image_product_no,
+		i.product_no AS
+		image_product_no,
 		i.type
 		FROM
 		tbl_product p
 		LEFT JOIN
-		tbl_p_image i ON p.product_no = i.product_no
+		tbl_p_image i ON
+		p.product_no = i.product_no
 		LEFT JOIN
-		tbl_p_brand pb ON p.brand_no = pb.brand_no
+		tbl_p_brand pb ON p.brand_no =
+		pb.brand_no
 		WHERE
 		i.type = 'image_300';
 
 	</select>
+
+	<!-- 상품 등록 -->
+	<insert id="insertProduct">
+		insert into tbl_product
+		(
+		product_no,
+		brand_no,
+		product,
+		price,
+		discount,
+		regdate,
+		benefit,
+		no_interest_installment,
+		is_shop_pickup,
+		is_shop_delivery
+		)
+		values
+		(
+		#{product_no},
+		#{brand_no},
+		#{product},
+		#{price},
+		#{discount},
+		#{regdate, jdbcType=TIMESTAMP},
+		#{benefit},
+		#{no_interest_installment},
+		#{is_shop_pickup},
+		#{is_shop_delivery}
+		)
+		<selectKey keyProperty="product_no" order="AFTER"
+			resultType="Long">
+			select max(product_no) from tbl_product
+		</selectKey>
+	</insert>
+
+
+
+
 </mapper>
