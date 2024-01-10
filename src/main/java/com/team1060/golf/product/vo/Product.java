@@ -18,7 +18,6 @@ public class Product {
 	private LocalDateTime regdate;
 	private String benefit;
 	private String no_interest_installment;
-
 	private boolean is_shop_pickup;
 	private boolean is_shop_delivery;
 }

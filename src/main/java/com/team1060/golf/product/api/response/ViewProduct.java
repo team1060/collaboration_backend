@@ -1,5 +1,7 @@
 package com.team1060.golf.product.api.response;
 
+import java.time.LocalDateTime;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,13 +10,16 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor
 public class ViewProduct {
-	private final Long product_no;
-	private final Long brand_no;
-	private final String product;
-	private final int price;
-	private final float discount;
-	private final int is_shop_pickup;
-	private final int is_shop_delivery;
+	private Long product_no;
+	private Long brand_no;
+	private String product;
+	private int price;
+	private float discount;
+	private String benefit;
+	private String no_interest_installment;
+	private int is_shop_pickup;
+	private int is_shop_delivery;
+	private LocalDateTime regdate;
 	
 	 public static ViewProduct fromViewAllProduct(ViewAllProduct viewAllProduct) {
 	        return ViewProduct.builder()

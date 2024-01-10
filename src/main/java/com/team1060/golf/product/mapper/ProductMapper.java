@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Param;
 import com.team1060.golf.product.api.request.RegisterProductRequest;
 import com.team1060.golf.product.api.request.SearchProductRequest;
 import com.team1060.golf.product.api.response.ViewAllProduct;
+import com.team1060.golf.product.api.response.ViewProduct;
 
 @Mapper
 public interface ProductMapper {
@@ -32,7 +33,7 @@ public interface ProductMapper {
 	 */
     List<ViewAllProduct> selectAll(SearchProductRequest request);
 
-	int createProduct(RegisterProductRequest request);
+	int createProduct(RegisterProductRequest request); // ????? 
 	
 	// 상품별 이미지 조회 
 	List<Map<String, Object>> getProductListItem(Long product_no);
@@ -52,6 +53,8 @@ public interface ProductMapper {
 //    		@Param("size") int size
 //    );
     
+	// 상품 등록 
+	int insertProduct(RegisterProductRequest request);
     
 
 }
