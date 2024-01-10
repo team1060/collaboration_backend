@@ -46,8 +46,10 @@ public class ProductService {
 	 * @since 2023.12.26
 	 * 
 	 */
+	
+	// 상품 등록 
 	public int registerProduct(RegisterProductRequest request) {
-		return productMapper.createProduct(request);
+		return productMapper.insertProduct(request);
 		
 	}
 	
@@ -58,7 +60,8 @@ public class ProductService {
 	public List<Map<String, Object>>getProductList() {
 		return productMapper.getProductList();
 	}
-
+	
+	
 //	public List<ViewProduct> searchProducts(SearchProductRequest request) {
 //	}
 }
