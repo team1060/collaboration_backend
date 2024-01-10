@@ -17,7 +17,6 @@ public class ProductDetailPageDownloadImage {
 			for (ProductImage productImage : productImages) {
 				downloadImage(productImage.getImageUrl(), "src/main/resources/static/img/product/" + productImage.getProduct_no(), productImage.getImageName());
 			}
-
 	}
 	
 	private static void downloadImage(String imageUrl, String directory, String fileName) {

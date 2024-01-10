@@ -1,14 +1,21 @@
 package com.team1060.golf.product.api;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -114,7 +121,9 @@ public class ProductApi {
 		        @RequestParam(name = "name") String name,
 		        @RequestParam(name = "count") int count,
 		        @RequestParam("images") List<MultipartFile> files) {
+
 		    try {
+		        // 상품 정보 등록
 		        RegisterProductRequest productRequest = RegisterProductRequest.builder()
 		                .brand_no(brand_no)
 		                .product(product)
@@ -128,34 +137,54 @@ public class ProductApi {
 		                .build();
 		        productService.registerProduct(productRequest);
 		        Long productNo = productRequest.getProduct_no();
+
+		        // 상품 이미지 등록
 		        List<RegisterProductImageRequest> imageRequests = new ArrayList<>();
 		        for (MultipartFile file : files) {
-		        	 String uuid = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"))
-		                     + "_" + file.getOriginalFilename();
-		            RegisterProductImageRequest imageRequest = RegisterProductImageRequest.builder()
-		                    .product_no(productNo)
-		                    .uuid(uuid)
-		                    .type("type")
-		                    .build();
-		            imageRequests.add(imageRequest);
-		        }
+		            String uuid = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "_" + file.getOriginalFilename();
+		            String relativePath = "img/product/" + productNo + "/" + uuid; // 상대 경로
+		            String absolutePath = "static/" + relativePath; // 절대 경로
 
+		            try {
+		                Path directoryPath = Paths.get("static/img/product/" + productNo);
+		                Files.createDirectories(directoryPath);
+		                Path filePath = Paths.get(absolutePath);
+		                Files.write(filePath, file.getBytes());
+
+		                RegisterProductImageRequest imageRequest = RegisterProductImageRequest.builder()
+		                        .product_no(productNo)
+		                        .uuid(uuid)
+		                        .path(relativePath)
+		                        .type("image_300")
+		                        .build();
+
+		                imageRequests.add(imageRequest);
+		            } catch (IOException e) {
+		                e.printStackTrace();
+		                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("이미지 저장 실패: " + e.getMessage());
+		            }
+		        }
 		        for (RegisterProductImageRequest imageRequest : imageRequests) {
 		            imageService.register(imageRequest);
 		        }
+
+		        // 상품 옵션 등록
 		        RegisterProductOptionRequest optionRequest = RegisterProductOptionRequest.builder()
-		        		.product_no(productNo)
-		        		.name(name)
-		        		.count(count)
-		        		.build();
+		                .product_no(productNo)
+		                .name(name)
+		                .count(count)
+		                .build();
 		        optionService.register(optionRequest);
-		        return ResponseEntity.ok("성공" );
+
+		        return ResponseEntity.ok("상품 추가 성공" + imageRequests);
 		    } catch (Exception e) {
 		        e.printStackTrace();
 		        log.info("상품 추가 실패", e);
 		        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("상품 추가 실패: " + e.getMessage());
 		    }
 		}
+
+		    
 
 
 }
