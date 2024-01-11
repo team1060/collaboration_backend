@@ -52,29 +52,43 @@ public class GolfReserveApi {
 		return reserveService.selectAllCourse();
 	}
 	// 골프장 예약 신청 
+	// 골프장 예약 신청
 	@PostMapping("/reservation/detail")
 	@CrossOrigin
 	@Transactional
 	public ResponseEntity<?> reserveGolf(
 	        @RequestBody RegisterAndModifyReserve golf
-	        ) {
+	) {
 	    try {
-	    	// 동시예약 가능성을 막기 위해 
-	    	boolean golfData = courseService.getCourseNo(golf.getCourse_no());
-	    	log.info(golfData);
-	    	if(golfData) {
-	    		reserveService.reserveGolf(golf);
-	    		golf.setGolf_status(1);
-	    		reserveService.modifyCourse(golf);
-	    	} else {
-	    		ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("이미 예약이 완료된 코스입니다.");
-	    	}
-	    	return ResponseEntity.ok(golf + " 예약 완료");
+	        int dayCount = reserveService.getDayCount(golf.getEmail());
+//	        log.info("갯수: " + dayCount);
+	        
+	        // 예약갯수
+	        if (dayCount >= 3) {
+	            return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body("하루에 3회 이상 예약할 수 없습니다.");
+	        }
+	        // 동시예약 가능성을 막기 위해
+	        boolean golfData = courseService.getCourseNo(golf.getCourse_no());
+	        log.info("골프 데이터: " + golfData);
+
+	        if (golfData) {
+	            reserveService.reserveGolf(golf);
+	            golf.setGolf_status(1);
+	            reserveService.modifyCourse(golf);
+	            return ResponseEntity.ok(golf + " 예약 완료");
+	        } else {
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("이미 예약이 완료된 코스입니다.");
+	        }
+
 	    } catch (Exception e) {
-	    	e.printStackTrace();
+	        e.printStackTrace();
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("골프장 예약 실패");
 	    }
 	}
+
+	
+	
+	
 	
 	// 아이디별 예약 내역조회 
 	@GetMapping("/reservation/confirm/{email}")

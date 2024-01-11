@@ -1,6 +1,7 @@
 package com.team1060.golf.golf.mapper;
 
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -47,5 +48,6 @@ public interface ReserveMapper {
 	// 예약취소 후 코스 상태 수정 
 	int golfUpdate(Long course_no);
 	
-	
+	// 예약 할 때 3개 제한 
+	int getDayCount(String email);
 }

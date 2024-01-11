@@ -1,6 +1,7 @@
 package com.team1060.golf.golf.service;
 
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -64,5 +65,10 @@ public class ReserveService {
 	public int golfUpdate(Long course_no) {
 		log.info("service");
 		return reserveMapper.golfUpdate(course_no);
+	}
+	
+	// 하루에 3개 예약 제한 
+	public int getDayCount(String email) {
+		return reserveMapper.getDayCount(email);
 	}
 }
