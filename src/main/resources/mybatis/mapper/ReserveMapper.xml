@@ -19,9 +19,11 @@
 		golf_date,
 		golf_status, greenpee
 		) VALUES (
-		#{reserve_no}, #{course_no}, #{email}, #{golf_no},
+		#{reserve_no}, #{course_no}, #{email},
+		#{golf_no},
 		#{course_name},
-		#{reserve_time, jdbcType=TIMESTAMP}, #{golf_time,
+		#{reserve_time, jdbcType=TIMESTAMP},
+		#{golf_time,
 		jdbcType=TIME},
 		#{golf_date, jdbcType=DATE}, 1, #{greenpee}
 		)
@@ -50,10 +52,13 @@
 		select * from tbl_g_reserve where email = #{email}
 	</select>
 
+	<!-- 아이디, 날짜 별 예약완료 갯수 -->
+
 	<!-- 코스 예약 취소 -->
 	<update id="cancelGolf">
 		update tbl_g_reserve
-		set golf_status = 2, cancelTime = now()
+		set golf_status = 2, cancelTime =
+		now()
 		where reserve_no = #{reserve_no}
 	</update>
 
@@ -71,4 +76,11 @@
 		#{reserve_no}
 	</select>
 
+	<!-- 아이디, 날짜 별 예약완료 갯수 -->
+	<select id="getDayCount" resultType="int">
+		SELECT COUNT(*) AS getDayCount
+		FROM tbl_g_reserve
+		WHERE email = #{email}
+		AND DATE(reserve_time) = DATE(NOW())
+	</select>
 </mapper>
