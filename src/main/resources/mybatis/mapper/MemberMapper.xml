@@ -62,9 +62,12 @@
 </update>
 
 <!-- 정보수정 관리자페이지 -->
-<update id="memberupdate">
+
+<update id="adminupdate">
     UPDATE tbl_member SET
+    email=#{email},
     nickname = #{nickname},
+    name = #{name},
     username = #{username},
     password = #{password},
     phone_number = #{phone_number},

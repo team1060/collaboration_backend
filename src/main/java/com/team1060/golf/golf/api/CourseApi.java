@@ -62,13 +62,13 @@ public class CourseApi {
 	}
 
 	// 코스 1개 수정
-	@PostMapping("/course/{course_no}")
+	@PutMapping("/course/{course_no}")
 	@CrossOrigin
 	public ResponseEntity<String> modifyCourse(@PathVariable (name = "course_no") Long course_no , @RequestBody RegisterAndModifyCourse course) {
 		try {
-			log.info("S");
+			
 			courseService.modifyCourse(course);
-			log.info("S");
+			
 			return ResponseEntity.ok("코스 수정 완료");
 		} catch (Exception e) {
 
@@ -79,7 +79,7 @@ public class CourseApi {
 	}
 
 	// 코스 삭제
-	@PostMapping("/course/d/{course_no}")
+	@DeleteMapping("/course/{course_no}")
 	public ResponseEntity<String> removeCourse(@PathVariable(name = "course_no") Long course_no) {
 		try {
 			courseService.removeCourse(course_no);

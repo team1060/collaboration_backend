@@ -154,24 +154,15 @@ public class MemberApi {
 	}
 
 	// 01 08 jyp 추가 관리자 페이지
-	@PostMapping("/admin/memberupdate/{email}")
+	@PutMapping("/admin/memberupdate/{email}")
 	@CrossOrigin
-	public ResponseEntity<String> adminUpdate(@PathVariable String email, @RequestBody RegisterAndModifyMember user) {
-	    ViewMember member = memberService.select(email); // URL에서 받은 이메일 사용
-	    
-	    // 관리자(2) 또는 중간 관리자(1)일 경우에만 수정 가능
-	    if (member != null && (member.getType() == 1 || member.getType() == 2)) {
-	        // 정보 수정 로직
-	        member.setNickname(user.getNickname());
-	        // 다른 필드들도 수정 가능하도록 추가
-	        member.setUsername(user.getUsername());
-	        member.setRole(user.getRole());
-	        member.setType(user.getType());
-	        member.setRegdate(user.getRegdate());
-	       
-	        memberService.modifyMember(member);
+	public ResponseEntity<String> adminUpdate(@PathVariable (name = "email")String email, @RequestBody RegisterAndModifyMember member) {
+	  try {
+	        memberService.adminMember(member);
 	        return ResponseEntity.ok("회원 정보 수정 완료");
-	    } else {
+	  } catch (Exception e) {
+
+			e.printStackTrace();
 	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("권한이 없거나 회원 정보가 없습니다.");
 	    }
 	}

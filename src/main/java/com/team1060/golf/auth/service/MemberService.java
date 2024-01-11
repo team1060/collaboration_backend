@@ -57,4 +57,8 @@ public class MemberService {
 	public ViewMember findEmail(FindEmailAndPassword member) {
 		return memberMapper.findEmail(member);
 	}
+	// 관리자 회원 수정
+	public int adminMember(RegisterAndModifyMember member) {
+		return memberMapper.adminupdate(member);
+	}
 }
