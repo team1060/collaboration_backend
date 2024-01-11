@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team1060.golf.product.mapper.PaymentMapper">
+<insert id="insertPayment">
+	INSERT INTO tbl_p_buy (product_no, email, shipping_no, status, payment_date, payment_method, amount, delivery_message, installment, card)
+    VALUES (#{product_no}, #{email}, #{shipping_no}, #{status}, #{payment_date}, #{payment_method}, #{amount}, #{delivery_message}, #{installment}, #{card})
+
+</insert>
+<insert id="insertPaymentOptions">
+	INSERT INTO tbl_p_buy_option (p_buy_no, option_no, count, price)
+    VALUES (#{p_buy_no}, #{option_no}, #{count}, #{price})
+</insert>
+<select id="getMaxPaymentNo" resultType="long">
+	SELECT MAX(p_buy_no) AS max_p_buy_no
+	FROM tbl_p_buy;
+</select>
+ <select id="getMaxPaymentByMember" resultType="java.util.Map">
+SELECT
+    JSON_ARRAYAGG(result) AS 'result'
+FROM (
+    SELECT
+        JSON_OBJECT(
+            'amount', pb.amount,
+            'delivery_message', pb.delivery_message,
+            'destination', s.destination,
+            'zipNo', s.zipNo,
+            'product_no', pb.product_no,
+            'product', tp.product,
+            'contact_number', s.contact_number,
+            'roadAddrPart2', s.roadAddrPart2,
+            'installment', pb.installment,
+            'shipping_email', pb.email,
+            'is_default_shipping', false,
+            'roadAddrPart1', s.roadAddrPart1,
+            'recipient', s.recipient,
+            'addrDetail', s.addrDetail,
+            'p_buy_no', pb.p_buy_no,
+            'email', pb.email,
+            'shipping_no', pb.shipping_no,
+            'payment_date', pb.payment_date,
+            'payment_method', pb.payment_method,
+            'status', pb.status,
+            'uuid', pi.uuid,
+            'path', pi.path,
+            'options', IFNULL(
+                JSON_ARRAYAGG(
+                    JSON_OBJECT(
+                        'option_no', po.option_no,
+                        'count', po.count,
+                        'price', po.price
+                    )
+                ),
+                '[]'
+            )
+        ) AS result
+    FROM tbl_p_buy pb
+    JOIN tbl_shipping s ON pb.shipping_no = s.shipping_no
+    LEFT JOIN tbl_p_buy_option po ON pb.p_buy_no = po.p_buy_no
+    LEFT JOIN tbl_p_image pi ON pb.product_no = pi.product_no AND pi.type = 'image_300'
+    LEFT JOIN tbl_product tp ON pb.product_no = tp.product_no
+    WHERE pb.email = "gilho1060@naver.com"
+    GROUP BY pb.p_buy_no
+) AS subquery;
+</select>
+
+
+</mapper>
