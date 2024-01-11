@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team1060.golf.product.mapper.ShippingMapper">
+<insert id="insertShipping">
+INSERT INTO tbl_shipping (
+      email,
+      recipient,
+      destination,
+      contact_number,
+      is_default_shipping,
+      roadAddrPart1,
+      roadAddrPart2,
+      zipNo,
+      addrDetail
+    )
+    VALUES (
+      #{email},
+      #{recipient},
+      #{destination},
+      #{contact_number},
+      #{is_default_shipping},
+      #{roadAddrPart1},
+      #{roadAddrPart2},
+      #{zipNo},
+      #{addrDetail}
+    )
+
+</insert>
+<select id="getMaxShippingNo" resultType="long">
+SELECT MAX(shipping_no) AS max_shipping_no
+FROM tbl_shipping;
+</select>
+</mapper>
