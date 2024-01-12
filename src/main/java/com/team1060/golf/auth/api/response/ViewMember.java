@@ -47,7 +47,6 @@ public class ViewMember {
 	    private String password;
 	    private String username; // 이름 
 		private String role; // user, admin 
-//		private String nickname;
 	}
 	
 	@Getter

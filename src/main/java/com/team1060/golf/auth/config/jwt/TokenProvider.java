@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.team1060.golf.auth.api.request.RegisterAndModifyMember;
 import com.team1060.golf.auth.api.response.ViewMember.LoginUser;
+import com.team1060.golf.auth.vo.OauthMember;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Header;
@@ -46,10 +47,28 @@ public class TokenProvider {
 				.signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey())
 				.compact();
 	}
+	
+	private String makeAuthToken(Date expiry, OauthMember user) {
+		Date now = new Date();
+		return Jwts.builder()
+				.setHeaderParam(Header.TYPE, Header.JWT_TYPE) // jwt 헤더에 토큰 타입 설정 
+				.setIssuer(jwtProperties.getIssuer()) // 발급자 
+				.setIssuedAt(now) // 토큰이 발급된 시간 
+				.setExpiration(expiry) // 토큰 만료시간 
+				.setSubject(user.getNickname()) 
+				.claim("role", user.getRole())
+				.signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey())
+				.compact();
+	}
 		
 	public String generateToken(LoginUser user, Duration expiredAt) {
 		Date now = new Date();
 		return makeToken(new Date(now.getTime() + expiredAt.toMillis()), user);
+	}
+	
+	public String generateAuthToken(OauthMember user, Duration expiredAt) {
+		Date now = new Date();
+		return makeAuthToken(new Date(now.getTime() + expiredAt.toMillis()), user);
 	}
 	
 	public String validateAndGetUserId(String token) throws JwtException {
