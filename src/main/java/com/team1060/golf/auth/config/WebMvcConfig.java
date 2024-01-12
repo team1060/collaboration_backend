@@ -2,11 +2,14 @@ package com.team1060.golf.auth.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import com.team1060.golf.auth.presentation.OauthServerTypeConverter;
 
 /**
  * <pre>
@@ -48,4 +51,10 @@ public class WebMvcConfig implements WebMvcConfigurer{
 	    source.registerCorsConfiguration("/**", config.applyPermitDefaultValues());
 	    return source;
 	}
+	
+	 @Override
+	    public void addFormatters(FormatterRegistry registry) {
+	        registry.addConverter(new OauthServerTypeConverter());
+	    }
+	
 }

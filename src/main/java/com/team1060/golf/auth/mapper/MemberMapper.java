@@ -45,5 +45,5 @@ public interface MemberMapper {
 	
 	// 관리자페이지 수정
 	int adminupdate(RegisterAndModifyMember member);
-
+	
 }
