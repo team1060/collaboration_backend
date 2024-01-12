@@ -16,6 +16,7 @@ public class OauthMember {
 	private String role;
 	private String email;
 	private String phone_number;
+	private String username;
 	
 	public Long id() {
         return id;

@@ -6,13 +6,13 @@
 <mapper namespace="com.team1060.golf.auth.mapper.AuthMemberMapper">
 
 	<select id="select" resultType="com.team1060.golf.auth.vo.OauthMember">
-    select * from tbl_auth_member
-    where oauth_serverid = #{oauthId.oauthServerId}
+    select * from tbl_member
+    where email = #{oauthId.oauthServerId}
 </select>
 	
 	<insert id="authJoin">
-    insert into tbl_auth_member (oauth_serverid, oauthserverType, nickname, role)
-    values (#{oauthId.oauthServerId}, #{oauthId.oauthServerType}, #{nickname}, 'user')
+    insert into tbl_member (email, oauthserverType, nickname, role, username)
+    values (#{oauthId.oauthServerId}, #{oauthId.oauthServerType}, #{nickname}, 'user', #{oauthId.oauthServerId})
 </insert>
 	
 </mapper>

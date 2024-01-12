@@ -13,12 +13,10 @@
 		email, nickname, username,
 		password, regdate,
 		phone_number, type,
-		auth_data,
 		is_sms_consent, is_email_consent, name, role
 		) VALUES (
 		#{email}, #{nickname}, #{username}, #{password}, #{regdate},
 		#{phone_number}, #{type},
-		#{auth_data},
 		#{is_sms_consent}, #{is_email_consent}, #{name}, 'user'
 		)
 	</insert>
@@ -57,7 +55,6 @@
     password = #{password},
     phone_number = #{phone_number},
     type = #{type},
-    auth_data = #{auth_data},
     is_sms_consent = #{is_sms_consent},
     is_email_consent = #{is_email_consent}
     WHERE email = #{email}
@@ -74,8 +71,7 @@
     password = #{password},
     phone_number = #{phone_number},
     type = #{type},
-    role = #{role}, <!-- 추가된 부분 -->
-    auth_data = #{auth_data},
+    role = #{role},
     is_sms_consent = #{is_sms_consent},
     is_email_consent = #{is_email_consent}
     WHERE email = #{email}
