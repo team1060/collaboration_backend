@@ -26,12 +26,12 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/api/payment")
 public class PaymentApi {
 	
 	private final PaymentService paymentService;
 
-	@PostMapping("/payment")
+	@PostMapping("/pay")
 	@CrossOrigin
 	public ResponseEntity<String> registerPayment(@RequestBody RegisterPaymentRequest request) {
 		try {
@@ -43,7 +43,7 @@ public class PaymentApi {
 		}
 	}
 	
-	@PostMapping("/payment/option")
+	@PostMapping("/option")
 	@CrossOrigin
 	public ResponseEntity<String> registerPaymentOption(@RequestBody RegisterPaymentOptionsRequest request) {
 		try {
@@ -55,7 +55,7 @@ public class PaymentApi {
 		}
 	}
 	
-	@PostMapping("/payment/options")
+	@PostMapping("/options")
 	@CrossOrigin
 	public ResponseEntity<String> registerPaymentOptions(@RequestBody List<RegisterPaymentOptionsRequest> requests) {
 		try {
@@ -75,7 +75,7 @@ public class PaymentApi {
 		return paymentService.getMaxPaymentNo();
 	}
 	
-	@GetMapping("paymentByMember")
+	@GetMapping("/paymentByMember")
     @CrossOrigin
     public List<Map<String, Object>> getPaymentByMember(@RequestParam String email) {
         List<Map<String, Object>> paymentList = paymentService.getPaymentByMember(email);

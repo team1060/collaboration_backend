@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/api/shipping")
 public class ShippingApi {
 	private final ShippingService shippingService;
 
@@ -25,7 +25,7 @@ public class ShippingApi {
 	public ResponseEntity<String> registerShipping(@RequestBody RegisterShippingRequest request) {
 		try {
 			shippingService.registerShipping(request);
-			return ResponseEntity.ok("주문 완료");
+			return ResponseEntity.ok("배송 완료");
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("브랜드 추가 실패");

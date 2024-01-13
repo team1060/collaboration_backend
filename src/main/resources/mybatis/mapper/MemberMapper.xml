@@ -13,11 +13,11 @@
 		email, nickname, username,
 		password, regdate,
 		phone_number, type,
-		is_sms_consent, is_email_consent, name, role
+		is_sms_consent, is_email_consent, name, role, oauthServerType
 		) VALUES (
 		#{email}, #{nickname}, #{username}, #{password}, #{regdate},
 		#{phone_number}, #{type},
-		#{is_sms_consent}, #{is_email_consent}, #{name}, 'user'
+		#{is_sms_consent}, #{is_email_consent}, #{name}, 'user' , GOLF
 		)
 	</insert>
 
