@@ -51,11 +51,13 @@ public class TokenProvider {
 	private String makeAuthToken(Date expiry, OauthMember user) {
 		Date now = new Date();
 		return Jwts.builder()
-				.setHeaderParam(Header.TYPE, Header.JWT_TYPE) // jwt 헤더에 토큰 타입 설정 
-				.setIssuer(jwtProperties.getIssuer()) // 발급자 
-				.setIssuedAt(now) // 토큰이 발급된 시간 
-				.setExpiration(expiry) // 토큰 만료시간 
-				.setSubject(user.getNickname()) 
+				.setHeaderParam(Header.TYPE, Header.JWT_TYPE) 
+				.setIssuer(jwtProperties.getIssuer()) 
+				.setIssuedAt(now) 
+				.setExpiration(expiry)
+				.setSubject(user.getEmail()) // 이메일 주소 
+				.claim("email", user.getEmail()) 
+				.claim("username", user.getUsername())
 				.claim("role", user.getRole())
 				.signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey())
 				.compact();

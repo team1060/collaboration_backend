@@ -82,6 +82,7 @@ public class CourseApi {
 	@DeleteMapping("/course/{course_no}")
 	public ResponseEntity<String> removeCourse(@PathVariable(name = "course_no") Long course_no) {
 		try {
+			
 			courseService.removeCourse(course_no);
 			return ResponseEntity.ok("코스 삭제 완료");
 		} catch (Exception e) {
