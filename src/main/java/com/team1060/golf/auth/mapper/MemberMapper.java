@@ -46,4 +46,7 @@ public interface MemberMapper {
 	// 관리자페이지 수정
 	int adminupdate(RegisterAndModifyMember member);
 	
+	// 어드민 상태 체크
+	boolean checkAdminStatus(String email);
+	
 }

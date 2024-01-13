@@ -88,4 +88,11 @@
 		SELECT email FROM tbl_member WHERE NAME = #{name} and phone_number = #{phone_number}
 	</select>
 	
+	<select id="checkAdminStatus" resultType="boolean" parameterType="string">
+		SELECT COUNT(*)
+        FROM tbl_member
+        WHERE email = #{email} and role = 'admin';
+
+	</select>
+	
 </mapper>

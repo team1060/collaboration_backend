@@ -61,4 +61,9 @@ public class MemberService {
 	public int adminMember(RegisterAndModifyMember member) {
 		return memberMapper.adminupdate(member);
 	}
+	
+	// 어드민 여부 확인
+	public boolean checkAdminStatus(String email) {
+		return memberMapper.checkAdminStatus(email);
+	}
 }
