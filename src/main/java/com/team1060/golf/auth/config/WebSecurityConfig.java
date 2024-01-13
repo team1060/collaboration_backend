@@ -37,7 +37,7 @@ public class WebSecurityConfig {
 	private final JwtAuthenticationFilter JwtAuthenticationFilter;
 	
 	private static  final String[] PERMIT_URL_ARRAY = {
-		"/","/golf/**", "/member/join/**", "/admin/golf/**" , "/api/member/**", "/api/admin/**", "/oauth/**"
+		"/","api/golf/**", "api/member/join/**" , "/oauth/**", "/api/product" , "api/member/login/**", "api/member/getEmail/**", "api/main/reserve"
 	};
 	
 	@Bean
@@ -51,7 +51,12 @@ public class WebSecurityConfig {
 			.httpBasic().disable()
 			.authorizeRequests()
 			.requestMatchers(PERMIT_URL_ARRAY).permitAll()
+			.requestMatchers("member/mypage/**").authenticated()
 			.requestMatchers("/api/reservation/**").authenticated()
+			.requestMatchers("/api/payment/**").authenticated()
+			.requestMatchers("/api/shipping/**").authenticated()
+			.requestMatchers("/api/admin/**").authenticated()
+			.requestMatchers("/**").hasRole("ADMIN")
 			.anyRequest().permitAll()
 			.and()
 			.addFilterAfter(JwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

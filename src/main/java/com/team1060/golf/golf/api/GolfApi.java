@@ -31,7 +31,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/admin")
+@RequestMapping("/api")
 public class GolfApi {
 
 	private final GolfService golfService;
@@ -50,7 +50,7 @@ public class GolfApi {
 	}
 	
 	// 골프장 등록 
-	@PostMapping("/golf")
+	@PostMapping("/aimin/golf")
 	@CrossOrigin
 	public ResponseEntity<String> registerGolf(@RequestBody RegisterAndModifyGolf request){
 		try {
@@ -62,14 +62,14 @@ public class GolfApi {
 	}
 	
 	// 골프장 1개 조회 
-	@GetMapping("/golf/{golf_no}")
+	@GetMapping("/aimin/golf/{golf_no}")
 	@CrossOrigin
 	public ViewGolf select(@PathVariable(name = "golf_no") Long golf_no) {
 		return golfService.select(golf_no);
 	}
 	
 	// 골프장 1개 수정 
-	@PutMapping("/golf/{golf_no}")
+	@PutMapping("/aimin/golf/{golf_no}")
 	@CrossOrigin
 	public ResponseEntity<String> modifyGolf(@RequestBody RegisterAndModifyGolf request){
 		try {
@@ -91,7 +91,7 @@ public class GolfApi {
 	}
 	
 	// 골프장 삭제 
-	@DeleteMapping("golf/info/{golf_no}")
+	@DeleteMapping("/aimin/golf/info/{golf_no}")
 	@CrossOrigin
 	public ResponseEntity<String> removeGolf(@PathVariable(name = "golf_no") Long golf_no){
 		try {
