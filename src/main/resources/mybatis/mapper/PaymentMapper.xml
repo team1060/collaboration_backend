@@ -58,8 +58,8 @@ FROM (
     LEFT JOIN tbl_p_buy_option po ON pb.p_buy_no = po.p_buy_no
     LEFT JOIN tbl_p_image pi ON pb.product_no = pi.product_no AND pi.type = 'image_300'
     LEFT JOIN tbl_product tp ON pb.product_no = tp.product_no
-    WHERE pb.email = "gilho1060@naver.com"
-    GROUP BY pb.p_buy_no
+    WHERE pb.email = #{email}
+    GROUP BY pb.p_buy_no desc
 ) AS subquery;
 </select>
 

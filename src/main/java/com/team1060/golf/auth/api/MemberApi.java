@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.time.Duration;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -198,9 +199,15 @@ public class MemberApi {
 		if(member != null) {
 			member.setPassword(BCrypt.hashpw(member.getPassword(), BCrypt.gensalt()));
 			memberService.modifyMember(member);
-		return ResponseEntity.ok("수정성공"); 
-	}else {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("수정 실패");
-    }
+			return ResponseEntity.ok("수정성공"); 
+		}else {
+	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("수정 실패");
+	    }
+	}
+	
+	// 어드민 여부
+	@GetMapping("isAdmin")
+	public boolean isAdmin(@Param("email") String email) {
+		return memberService.checkAdminStatus(email);
 	}
 }
