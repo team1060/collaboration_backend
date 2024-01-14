@@ -51,6 +51,7 @@ public class WebSecurityConfig {
 		"api/products/**",
 		"api/brand",
 		"img/**"
+//		"api/member/mypage/**"
 	};
 	
 	@Bean
@@ -68,7 +69,7 @@ public class WebSecurityConfig {
 			.requestMatchers("/api/reservation/**").authenticated()
 			.requestMatchers("/api/payment/**").authenticated()
 			.requestMatchers("/api/shipping/**").authenticated()
-			.requestMatchers("/api/admin/**").authenticated()
+//			.requestMatchers("/api/admin/**").authenticated()
 			.requestMatchers("/**").hasRole("ADMIN")
 			.anyRequest().permitAll()
 			.and()
