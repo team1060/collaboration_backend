@@ -43,14 +43,14 @@ public class GolfApi {
 //    }
 	
 	// 골프장 전체조회 
-	@GetMapping("/reservation/golf")
+	@GetMapping({"/reservation/golf", "/golf"})
 	@CrossOrigin
 	public List<ViewGolf> selectAll() {
 		return golfService.selectAll();
 	}
 	
 	// 골프장 등록 
-	@PostMapping("/aimin/golf")
+	@PostMapping("/admin/golf")
 	@CrossOrigin
 	public ResponseEntity<String> registerGolf(@RequestBody RegisterAndModifyGolf request){
 		try {
@@ -62,14 +62,14 @@ public class GolfApi {
 	}
 	
 	// 골프장 1개 조회 
-	@GetMapping("/aimin/golf/{golf_no}")
+	@GetMapping("/admin/golf/{golf_no}")
 	@CrossOrigin
 	public ViewGolf select(@PathVariable(name = "golf_no") Long golf_no) {
 		return golfService.select(golf_no);
 	}
 	
 	// 골프장 1개 수정 
-	@PutMapping("/aimin/golf/{golf_no}")
+	@PutMapping("/admin/golf/{golf_no}")
 	@CrossOrigin
 	public ResponseEntity<String> modifyGolf(@RequestBody RegisterAndModifyGolf request){
 		try {
@@ -91,7 +91,7 @@ public class GolfApi {
 	}
 	
 	// 골프장 삭제 
-	@DeleteMapping("/aimin/golf/info/{golf_no}")
+	@DeleteMapping("/admin/golf/info/{golf_no}")
 	@CrossOrigin
 	public ResponseEntity<String> removeGolf(@PathVariable(name = "golf_no") Long golf_no){
 		try {

@@ -23,7 +23,9 @@ import com.team1060.golf.product.api.request.RegisterPaymentRequest;
 import com.team1060.golf.product.service.PaymentService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
+@Log4j2
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/payment")
@@ -78,6 +80,8 @@ public class PaymentApi {
 	@GetMapping("/paymentByMemberCount")
 	@CrossOrigin
 	public int getPaymentByMemberCount(@RequestParam String email) {
+		log.info("이메일");
+		log.info(email);
 		return paymentService.getPaymentByMemberCount(email);
 	}
 	

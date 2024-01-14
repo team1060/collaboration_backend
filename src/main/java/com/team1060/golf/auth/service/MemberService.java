@@ -66,4 +66,9 @@ public class MemberService {
 	public boolean checkAdminStatus(String email) {
 		return memberMapper.checkAdminStatus(email);
 	}
+	
+	// 탈퇴 테이블 전체 조회 
+	public List<ViewMember> selectDelUser(){
+		return memberMapper.selectDelUser();
+	}
 }

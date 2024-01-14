@@ -94,4 +94,9 @@
         WHERE email = #{email} and role = 'admin';
 	</select>
 	
+	<!-- 회원 백업테이블 조회  -->
+	<select id="selectDelUser" resultType="com.team1060.golf.auth.api.response.ViewMember">
+		SELECT * FROM backup_tbl_member
+	</select>
+	
 </mapper>

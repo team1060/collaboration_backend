@@ -34,9 +34,10 @@ public class ViewMember {
 	private ZonedDateTime regdate; // 가입일 
 	private String phone_number; // 휴대폰 번호 
 	private int type; // 회원, 중간관리자, 총괄관리자 0, 1, 2
-	private String auth_data; // 카카오인증, 메일인증, 휴대폰 인증 등 인증 정보 
 	private int is_sms_consent; // true 1 , false 0 
 	private int is_email_consent; // true 1 , false 0 
+	private String oauthServerType; // 카카오, 네이버 등 인증 정보 
+	
 	
 	
 	@Getter

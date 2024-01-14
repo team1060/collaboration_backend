@@ -55,7 +55,7 @@
 	<!-- 아이디별 코스 조회 -->
 	<select id="getEmailCount" 
 		resultType="int">
-		select count(*) from tbl_g_reserve where email = #{email}
+		select count(*) from tbl_g_reserve where email = #{email} and golf_status = 1
 	</select>
 
 	<!-- 아이디, 날짜 별 예약완료 갯수 -->
