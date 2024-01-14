@@ -51,7 +51,7 @@ public class GolfReserveApi {
 	public List<ViewCourse> selectAll() {
 		return reserveService.selectAllCourse();
 	}
-	// 골프장 예약 신청 
+
 	// 골프장 예약 신청
 	@PostMapping("/reservation/detail")
 	@CrossOrigin
@@ -94,6 +94,14 @@ public class GolfReserveApi {
 		return reserveService.selectEmail(email);
 	}
 	
+	// 아이디별 예약 내역 갯수조회
+	@GetMapping("/reservation/confirmcount/{email}")
+	@CrossOrigin
+	public int selectEmailcount(@PathVariable(name ="email") String email) {
+		return reserveService.selectEmailCount(email);
+	}
+		
+		
 	// 예약 취소 
 	@PostMapping("/reservation/cancel/{reserve_no}")
 	@CrossOrigin

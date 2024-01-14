@@ -75,6 +75,12 @@ public class PaymentApi {
 		return paymentService.getMaxPaymentNo();
 	}
 	
+	@GetMapping("/paymentByMemberCount")
+	@CrossOrigin
+	public int getPaymentByMemberCount(@RequestParam String email) {
+		return paymentService.getPaymentByMemberCount(email);
+	}
+	
 	@GetMapping("/paymentByMember")
     @CrossOrigin
     public List<Map<String, Object>> getPaymentByMember(@RequestParam String email) {
