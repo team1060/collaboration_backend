@@ -43,7 +43,7 @@ public class GolfApi {
 //    }
 	
 	// 골프장 전체조회 
-	@GetMapping("/golf")
+	@GetMapping("/reservation/golf")
 	@CrossOrigin
 	public List<ViewGolf> selectAll() {
 		return golfService.selectAll();

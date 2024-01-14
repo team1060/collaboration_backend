@@ -52,7 +52,6 @@ public class GolfReserveApi {
 		return reserveService.selectAllCourse();
 	}
 	// 골프장 예약 신청 
-	// 골프장 예약 신청
 	@PostMapping("/reservation/detail")
 	@CrossOrigin
 	@Transactional

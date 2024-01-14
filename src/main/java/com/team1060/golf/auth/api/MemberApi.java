@@ -206,7 +206,7 @@ public class MemberApi {
 	}
 	
 	// 어드민 여부
-	@GetMapping("isAdmin")
+	@GetMapping("/isAdmin")
 	public boolean isAdmin(@Param("email") String email) {
 		return memberService.checkAdminStatus(email);
 	}
