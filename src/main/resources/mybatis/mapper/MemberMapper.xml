@@ -89,10 +89,9 @@
 	</select>
 	
 	<select id="checkAdminStatus" resultType="boolean" parameterType="string">
-		SELECT COUNT(*)
+		SELECT COUNT(*)ㅌ
         FROM tbl_member
         WHERE email = #{email} and role = 'admin';
-
 	</select>
 	
 </mapper>

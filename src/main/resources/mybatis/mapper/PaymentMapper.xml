@@ -63,5 +63,7 @@ FROM (
 ) AS subquery;
 </select>
 
-
+<select id="getPaymentByMemberCount" resultType="int" >
+	SELECT COUNT(*) FROM tbl_p_buy where email = #{email}
+</select>
 </mapper>

@@ -39,6 +39,9 @@ public interface ReserveMapper {
 	// 예약내역 
 	List<ViewReserve> selectEmail(String email);
 	
+	// 예약내역갯수
+	int getEmailCount(String email);
+
 	// 골프장 예약 취소 
 	int cancelGolf(Long reserve_no);
 	
@@ -50,4 +53,5 @@ public interface ReserveMapper {
 	
 	// 예약 할 때 3개 제한 
 	int getDayCount(String email);
+
 }
