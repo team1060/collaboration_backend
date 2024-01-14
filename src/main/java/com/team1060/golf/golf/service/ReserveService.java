@@ -71,4 +71,9 @@ public class ReserveService {
 	public int getDayCount(String email) {
 		return reserveMapper.getDayCount(email);
 	}
+
+	public int selectEmailCount(String email) {
+		// TODO Auto-generated method stub
+		return reserveMapper.getEmailCount(email);
+	}
 }

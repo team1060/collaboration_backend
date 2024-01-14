@@ -31,4 +31,8 @@ public class PaymentService {
 	public List<Map<String, Object>> getPaymentByMember(String email) {
 		return paymentMapper.getMaxPaymentByMember(email);
 	}
+
+	public int getPaymentByMemberCount(String email) {
+		return paymentMapper.getPaymentByMemberCount(email);
+	}
 }

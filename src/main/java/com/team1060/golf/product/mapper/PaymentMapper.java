@@ -18,4 +18,6 @@ public interface PaymentMapper {
 	Long getMaxPaymentNo();
 
 	List<Map<String, Object>> getMaxPaymentByMember(String email);
+
+	int getPaymentByMemberCount(String email);
 }
