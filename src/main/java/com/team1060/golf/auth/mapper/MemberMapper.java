@@ -10,6 +10,8 @@ import com.team1060.golf.auth.api.request.RegisterAndModifyMember;
 import com.team1060.golf.auth.api.response.ViewMember;
 import com.team1060.golf.auth.api.response.ViewMember.LoginUser;
 
+import io.opentelemetry.sdk.metrics.View;
+
 /**
  * <pre>
  * 회원 api 
@@ -49,4 +51,5 @@ public interface MemberMapper {
 	// 어드민 상태 체크
 	boolean checkAdminStatus(String email);
 	
+	List<ViewMember> selectDelUser();
 }

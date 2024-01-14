@@ -37,8 +37,8 @@ public class WebSecurityConfig {
 	private final JwtAuthenticationFilter JwtAuthenticationFilter;
 	
 	private static  final String[] PERMIT_URL_ARRAY = {
-		"/","api/golf/**", "api/member/join/**" , 
-		"oauth/**", "api/product" , 
+		"/","api/golf/**", "api/member/join/**" , "api/member/deljoin",
+		"oauth/**", "api/product" , "api/golf/info/**",
 		"api/member/login/**", "api/member/getEmail/**", 
 		"api/main/reserve" , "api/member/isAdmin"
 	};
@@ -58,8 +58,8 @@ public class WebSecurityConfig {
 			.requestMatchers("/api/reservation/**").authenticated()
 			.requestMatchers("/api/payment/**").authenticated()
 			.requestMatchers("/api/shipping/**").authenticated()
-//			.requestMatchers("/api/admin/**").authenticated()
-//			.requestMatchers("/**").hasRole("ADMIN")
+			.requestMatchers("/api/admin/**").authenticated()
+			.requestMatchers("/**").hasRole("ADMIN")
 			.anyRequest().permitAll()
 			.and()
 			.addFilterAfter(JwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

@@ -4,15 +4,18 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.team1060.golf.auth.mapper.AuthMemberMapper">
-
+	
+	<!-- 소셜로그인 -->
 	<select id="select" resultType="com.team1060.golf.auth.vo.OauthMember">
     select * from tbl_member
     where email = #{oauthId.oauthServerId}
 </select>
 	
+	<!-- 소셜회원가입 -->
 	<insert id="authJoin">
     insert into tbl_member (email, oauthserverType, nickname, role, username)
     values (#{oauthId.oauthServerId}, #{oauthId.oauthServerType}, #{nickname}, 'user', #{oauthId.oauthServerId})
 </insert>
+	
 	
 </mapper>

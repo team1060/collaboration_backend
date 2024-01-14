@@ -67,7 +67,13 @@ public class MemberApi {
 	public List<ViewMember> getEmailList() {
 		return memberService.selectAll();
 	}
-
+	
+	// 탈퇴 회원 전체 조회 
+	@GetMapping("/deljoin")
+	public List<ViewMember> selectDelUser() {
+		return memberService.selectDelUser();
+	}
+	
 	// 회원가입
 	@PostMapping("/join")
 	public ResponseEntity<String> joinMember(@RequestBody RegisterAndModifyMember member) {
