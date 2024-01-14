@@ -62,7 +62,7 @@ public class GolfApi {
 	}
 	
 	// 골프장 1개 조회 
-	@GetMapping("/admin/golf/{golf_no}")
+	@GetMapping({"/admin/golf/{golf_no}", "/golf/{golf_no}"})
 	@CrossOrigin
 	public ViewGolf select(@PathVariable(name = "golf_no") Long golf_no) {
 		return golfService.select(golf_no);
