@@ -36,11 +36,11 @@ public class GolfApi {
 
 	private final GolfService golfService;
 	
-//	// 테스트용 코드 
-//	@GetMapping("/")
-//    public @ResponseBody String Hello(){
-//        return "backend";
-//    }
+	// 테스트용 코드 
+	@GetMapping("/")
+    public @ResponseBody String Hello(){
+        return "backend";
+    }
 	
 	// 골프장 전체조회 
 	@GetMapping({"/reservation/golf", "/golf"})
