@@ -57,28 +57,27 @@ public class WebSecurityConfig {
 		"api/admin/course/**"
 	};
 	
-	@Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http
-		.cors().and()
-			.csrf().disable()
-			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-			.and()
-			.formLogin().disable()
-			.httpBasic().disable()
-			.authorizeRequests()
-			.requestMatchers(PERMIT_URL_ARRAY).permitAll()
-			.requestMatchers("member/mypage/**").authenticated()
-			.requestMatchers("/api/reservation/**").authenticated()
-			.requestMatchers("/api/payment/**").authenticated()
-			.requestMatchers("/api/shipping/**").authenticated()
-			.requestMatchers("/api/admin/**").authenticated()
-//			.requestMatchers("/**").hasRole("ADMIN")
-			.anyRequest().permitAll()
-			.and()
-			.addFilterAfter(JwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-			.exceptionHandling().accessDeniedPage("/access-denied");
-        return http.build();
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+	    http 
+	        .cors().and()
+	        .csrf().disable()
+	        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+	        .and()
+	        .formLogin().disable()
+	        .httpBasic().disable()
+	        .authorizeRequests()
+	            .requestMatchers(PERMIT_URL_ARRAY).permitAll()
+	            .requestMatchers("/member/mypage/**").authenticated()
+	            .requestMatchers("/api/reservation/**", "/api/payment/**", "/api/shipping/**").authenticated()
+	            .requestMatchers("/**").hasRole("ADMIN")
+	            .anyRequest().permitAll()
+	        .and()
+	        .addFilterAfter(
+	        		JwtAuthenticationFilter, 
+	        		UsernamePasswordAuthenticationFilter.class
+	        		)
+	        .exceptionHandling().accessDeniedPage("/access-denied");
+	    return http.build();
 	}
 	
 	// 복호화 
