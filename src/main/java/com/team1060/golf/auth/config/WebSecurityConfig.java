@@ -48,10 +48,13 @@ public class WebSecurityConfig {
 		"api/member/getEmail/**", 
 		"api/main/reserve", 
 		"api/member/isAdmin",
+		"api/member/modify/**",
 		"api/products/**",
+		"api/payment/**",
+		"api/shipping/**",
 		"api/brand",
-		"img/**"
-//		"api/member/mypage/**"
+		"img/**",
+		"api/admin/course/**"
 	};
 	
 	@Bean
@@ -69,8 +72,8 @@ public class WebSecurityConfig {
 			.requestMatchers("/api/reservation/**").authenticated()
 			.requestMatchers("/api/payment/**").authenticated()
 			.requestMatchers("/api/shipping/**").authenticated()
-//			.requestMatchers("/api/admin/**").authenticated()
-			.requestMatchers("/**").hasRole("ADMIN")
+			.requestMatchers("/api/admin/**").authenticated()
+//			.requestMatchers("/**").hasRole("ADMIN")
 			.anyRequest().permitAll()
 			.and()
 			.addFilterAfter(JwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
