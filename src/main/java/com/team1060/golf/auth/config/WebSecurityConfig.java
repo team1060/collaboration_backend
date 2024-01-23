@@ -48,13 +48,15 @@ public class WebSecurityConfig {
 		"api/member/getEmail/**", 
 		"api/main/reserve", 
 		"api/member/isAdmin",
+		"api/member/modify/**",
 		"api/products/**",
+		"api/payment/**",
+		"api/shipping/**",
 		"api/brand",
-		"img/**"
-//		"api/member/mypage/**"
+		"img/**",
+		"api/admin/course/**"
 	};
 	
-	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 	    http 
 	        .cors().and()

@@ -200,10 +200,10 @@ public class MemberApi {
 	
 	// 비밀번호 찾기 
 	@PostMapping("/modify/pw")
-	public ResponseEntity<String> findPw(@RequestBody RegisterAndModifyMember user) {
+	public ResponseEntity<String> findPw(@RequestBody PasswordChangeRequest user) {
 		ViewMember member = memberService.select(user.getEmail());
 		if(member != null) {
-			member.setPassword(BCrypt.hashpw(member.getPassword(), BCrypt.gensalt()));
+			member.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
 			memberService.modifyMember(member);
 			return ResponseEntity.ok("수정성공"); 
 		}else {
