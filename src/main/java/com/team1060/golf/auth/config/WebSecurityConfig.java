@@ -36,59 +36,55 @@ public class WebSecurityConfig {
 	
 	private final JwtAuthenticationFilter JwtAuthenticationFilter;
 	
-//	private static  final String[] PERMIT_URL_ARRAY = {
-//		"/",
-//		"golf/api",
-//		"http://13.209.73.98:8080/**",
-//		"api/golf/**", 
-//		"api/member/join/**" , 
-//		"api/member/deljoin",
-//		"oauth/**", 
-//		"api/product" , 
-//		"api/golf/info/**",
-//		"api/member/login/**", 
-//		"api/member/getEmail/**", 
-//		"api/main/reserve", 
-//		"api/member/isAdmin",
-//		"api/member/modify/**",
-//		"api/products/**",
-//		"api/payment/**",
-//		"api/shipping/**",
-//		"api/brand",
-//		"img/**",
-//		"api/admin/course/**"
-//	};
-	
-//	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//	    http 
-//	        .cors().and()
-//	        .csrf().disable()
-//	        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//	        .and()
-//	        .formLogin().disable()
-//	        .httpBasic().disable()
-//	        .authorizeRequests()
-//	        .requestMatchers("/**").permitAll()
-////	            .requestMatchers(PERMIT_URL_ARRAY).permitAll()
-////	            .requestMatchers("/member/mypage/**").authenticated()
-////	            .requestMatchers("/api/reservation/**", "/api/payment/**", "/api/shipping/**").authenticated()
-////	            .requestMatchers("/**").hasRole("ADMIN")
-////	            .anyRequest().permitAll()
-//	        .and()
-//	        .addFilterAfter(
-//	        		JwtAuthenticationFilter, 
-//	        		UsernamePasswordAuthenticationFilter.class
-//	        		)
-//	        .exceptionHandling().accessDeniedPage("/access-denied");
-//	    return http.build();
-//	}
-	
-	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http
-			.csrf().disable();
-		return http.build();
+	    http 
+	        .cors().and()
+	        .csrf().disable()
+	        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+	        .and()
+	        .formLogin().disable()
+	        .httpBasic().disable()
+	        .authorizeRequests()
+//	        .requestMatchers("/**").permitAll()
+	            .requestMatchers(		
+	            		"/",
+	            		"api/golf",
+	            		"api/golf/**", 
+	            		"api/member/join/**" , 
+	            		"api/member/deljoin",
+	            		"oauth/**", 
+	            		"api/product", 
+	            		"api/golf/info/**",
+	            		"api/member/login/**", 
+	            		"api/member/getEmail/**", 
+	            		"api/main/reserve", 
+	            		"api/member/isAdmin",
+	            		"api/member/modify/**",
+	            		"api/products/**",
+	            		"api/payment/**",
+	            		"api/shipping/**",
+	            		"api/brand",
+	            		"img/**",
+	            		"api/admin/course/**"
+	            	).permitAll()
+	            .requestMatchers("/member/mypage/**").authenticated()
+	            .requestMatchers("/api/reservation/**", "/api/payment/**", "/api/shipping/**").authenticated()
+	            .anyRequest().permitAll()
+	        .and()
+	        .addFilterAfter(
+	        		JwtAuthenticationFilter,
+	        		UsernamePasswordAuthenticationFilter.class
+	        		)
+	        .exceptionHandling().accessDeniedPage("/access-denied");
+	    return http.build();
 	}
+	
+//	@Bean
+//	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//		http
+//			.csrf().disable();
+//		return http.build();
+//	}
 	
 	// 복호화 
 	@Bean

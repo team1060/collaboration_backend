@@ -64,21 +64,18 @@ public class ProductApi {
 		
 		// 전체 상품 조회 
 		@GetMapping("/product")
-		@CrossOrigin
 		public List<Map<String, Object>> getProductList(){
 			return productService.getProductList();
 		}
 		
 		// 상품 상세페이지 
 		@GetMapping("/products/{product_no}")
-		@CrossOrigin
 		public List<Map<String, Object>> getProduct(@PathVariable Long product_no){
 			return productService.getProductListItem(product_no);
 		}
 		
 		// 브랜드 추가
 		@PostMapping("/admin/product")
-		@CrossOrigin
 		public ResponseEntity<String> registerProduct(@RequestBody RegisterProductRequest request) {
 			try {
 				productService.registerProduct(request);
@@ -92,7 +89,6 @@ public class ProductApi {
 		
 		// 브랜드 여러개 추가 (RequestBody를 List로 받고, forEach로 requests 돌리기
 		@PostMapping("/admin/products")
-		@CrossOrigin
 		public ResponseEntity<String> registerProducts(@RequestBody List<RegisterProductRequest> requests) {
 		    try {
 		        for (RegisterProductRequest request : requests) {
